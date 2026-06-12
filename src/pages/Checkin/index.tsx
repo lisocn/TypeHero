@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { useCheckinStore } from '../../stores/checkinStore'
-import Button from '../../components/Button'
 
 export default function Checkin() {
   const now = new Date()

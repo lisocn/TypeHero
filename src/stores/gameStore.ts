@@ -66,7 +66,6 @@ export const useGameStore = create<GameState>()(
         }
         chapter.levels[levelId] = updated
 
-        const totalLevels = Object.keys(chapter.levels).length
         const completedLevels = Object.values(chapter.levels).filter(l => l.completed).length
         if (completedLevels >= 6) {
           chapter.bossUnlocked = true

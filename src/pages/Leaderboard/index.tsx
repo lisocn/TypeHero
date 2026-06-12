@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { useUserStore } from '../../stores/userStore'
 import { AVATARS } from '../../utils/levelConfig'
 
 const MOCK_ENTRIES = [
@@ -16,23 +15,22 @@ const MOCK_ENTRIES = [
 ]
 
 const TABS = [
-  { id: 'wpm', label: '⚡ 速度之王', key: 'value' },
+  { id: 'wpm', label: '⚡ 速度之王', key: 'value' as const },
   { id: 'chars', label: '⌨️ 打字量榜', value: [12000, 9800, 8500, 7200, 6000, 5000, 4000, 3000, 2500, 2000] },
   { id: 'streak', label: '🔥 全勤达人', value: [21, 18, 15, 12, 10, 8, 7, 5, 4, 3] },
   { id: 'medals', label: '🏆 奖章收藏', value: [12, 10, 8, 7, 6, 5, 4, 3, 2, 1] },
-  { id: 'level', label: '⭐ 等级排行', key: 'level' },
+  { id: 'level', label: '⭐ 等级排行', key: 'level' as const },
 ]
 
 export default function Leaderboard() {
   const [activeTab, setActiveTab] = useState('wpm')
-  const user = useUserStore(s => s.user)
   const currentTab = TABS.find(t => t.id === activeTab)!
 
   const entries = MOCK_ENTRIES.map((e, i) => {
-    const tabValue = typeof currentTab.value === 'number'
+    const tabValue = 'value' in currentTab && Array.isArray(currentTab.value)
       ? currentTab.value[i]
-      : e[currentTab.key as keyof typeof e] as number
-    return { ...e, displayValue: tabValue }
+      : (e as Record<string, number>)[currentTab.key]
+    return { ...e, displayValue: tabValue ?? 0 }
   }).sort((a, b) => b.displayValue - a.displayValue)
 
   return (

@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useGameStore } from '../../stores/gameStore'
 import { useUserStore } from '../../stores/userStore'
@@ -29,7 +29,6 @@ export default function Game() {
 
   const [phase, setPhase] = useState<GamePhase>('countdown')
   const [countdown, setCountdown] = useState(3)
-  const [lastKey, setLastKey] = useState<{ key: string; correct: boolean } | null>(null)
   const [toast, setToast] = useState<string | null>(null)
 
   const engine = useTypingEngine({

@@ -20,7 +20,7 @@ export default function Adventure() {
       <h1 className="text-3xl font-bold text-center mb-8 text-[var(--color-accent-gold)]">🌍 世界冒险地图</h1>
 
       <div className="space-y-8">
-        {CHAPTERS.map((chapter, ci) => (
+        {CHAPTERS.map((chapter) => (
           <div key={chapter.id} className="bg-[var(--color-bg-secondary)] rounded-xl p-6">
             <div className="flex items-center gap-3 mb-4">
               <span className="text-3xl">{chapter.icon}</span>
