@@ -128,7 +128,7 @@ export default function Game() {
             </div>
           </div>
 
-          <VirtualKeyboard targetKey={engine.currentChar} lastKey={lastKey} />
+          <VirtualKeyboard targetKey={engine.currentChar} />
 
           <div className="flex justify-center mt-4">
             <Button variant="ghost" onClick={() => { engine.pause(); setPhase('paused') }}>

@@ -27,10 +27,15 @@ export default function Leaderboard() {
   const currentTab = TABS.find(t => t.id === activeTab)!
 
   const entries = MOCK_ENTRIES.map((e, i) => {
-    const tabValue = 'value' in currentTab && Array.isArray(currentTab.value)
-      ? currentTab.value[i]
-      : (e as Record<string, number>)[currentTab.key]
-    return { ...e, displayValue: tabValue ?? 0 }
+    let tabValue: number
+    if ('value' in currentTab && Array.isArray(currentTab.value)) {
+      tabValue = (currentTab.value as number[])[i] ?? 0
+    } else if ('key' in currentTab) {
+      tabValue = (e as unknown as Record<string, number>)[currentTab.key as string] ?? 0
+    } else {
+      tabValue = 0
+    }
+    return { ...e, displayValue: tabValue }
   }).sort((a, b) => b.displayValue - a.displayValue)
 
   return (
