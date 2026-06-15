@@ -7,6 +7,14 @@ import Button from '../../components/Button'
 
 const GRADES: Grade[] = [3, 4, 5, 6]
 const GRADE_LABELS: Record<Grade, string> = { 3: '三年级', 4: '四年级', 5: '五年级', 6: '六年级' }
+const LS_KEY = 'typehero_selected_textbooks'
+
+function loadLocal(): string[] {
+  try { return JSON.parse(localStorage.getItem(LS_KEY) || '[]') } catch { return [] }
+}
+function saveLocal(ids: string[]) {
+  localStorage.setItem(LS_KEY, JSON.stringify(ids))
+}
 
 export default function TextbookSelect() {
   const navigate = useNavigate()
@@ -17,8 +25,17 @@ export default function TextbookSelect() {
 
   useEffect(() => {
     api.getSelectedTextbooks()
-      .then(({ textbookIds }) => setSelectedIds(new Set(textbookIds)))
-      .catch(() => {})
+      .then(({ textbookIds }) => {
+        if (textbookIds.length > 0) setSelectedIds(new Set(textbookIds))
+        else {
+          const local = loadLocal()
+          if (local.length > 0) setSelectedIds(new Set(local))
+        }
+      })
+      .catch(() => {
+        const local = loadLocal()
+        if (local.length > 0) setSelectedIds(new Set(local))
+      })
       .finally(() => setLoading(false))
   }, [])
 
@@ -33,21 +50,20 @@ export default function TextbookSelect() {
 
   const handleSave = async () => {
     setSaving(true)
+    const ids = Array.from(selectedIds)
+    saveLocal(ids)
     try {
       const current = await api.getSelectedTextbooks()
       const currentSet = new Set(current.textbookIds)
-
-      for (const id of selectedIds) {
+      for (const id of ids) {
         if (!currentSet.has(id)) await api.selectTextbook(id)
       }
       for (const id of currentSet) {
         if (!selectedIds.has(id)) await api.unselectTextbook(id)
       }
-      navigate('/adventure')
-    } catch {
-      navigate('/adventure')
-    }
+    } catch {}
     setSaving(false)
+    navigate('/adventure')
   }
 
   const gradeTextbooks = getTextbooksByGrade(selectedGrade)

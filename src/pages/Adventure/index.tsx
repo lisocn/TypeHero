@@ -7,6 +7,11 @@ import type { Textbook } from '../../data/types'
 import StarRating from '../../components/StarRating'
 import { api } from '../../utils/api'
 
+const LS_KEY = 'typehero_selected_textbooks'
+function loadLocal(): string[] {
+  try { return JSON.parse(localStorage.getItem(LS_KEY) || '[]') } catch { return [] }
+}
+
 export default function Adventure() {
   const navigate = useNavigate()
   const user = useUserStore(s => s.user)
@@ -17,13 +22,15 @@ export default function Adventure() {
   useEffect(() => {
     if (!user) { navigate('/login'); return }
     api.getSelectedTextbooks()
-      .then(({ textbookIds }) => setSelectedIds(textbookIds))
-      .catch(() => setSelectedIds(TEXTBOOKS.map(t => t.id)))
+      .then(({ textbookIds }) => {
+        setSelectedIds(textbookIds.length > 0 ? textbookIds : loadLocal())
+      })
+      .catch(() => setSelectedIds(loadLocal()))
   }, [user, navigate])
 
   const selectedTextbooks: Textbook[] = selectedIds.length > 0
     ? TEXTBOOKS.filter(t => selectedIds.includes(t.id))
-    : TEXTBOOKS
+    : []
 
   if (!user) return null
 
