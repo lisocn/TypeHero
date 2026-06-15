@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
+import { api } from '../utils/api'
 
 export interface CheckinRecord {
   date: string
@@ -18,7 +19,8 @@ interface CheckinState {
   longestStreak: number
   totalDays: number
   monthlyPatchCards: number
-  checkin: (date: string, data: Partial<CheckinRecord>) => void
+  initFromServer: () => Promise<void>
+  checkin: (date: string, data?: Partial<CheckinRecord>) => void
   usePatchCard: (date: string) => boolean
   getMonthRecords: (year: number, month: number) => Record<string, CheckinRecord>
   canCheckin: (date: string) => boolean
@@ -32,6 +34,13 @@ export const useCheckinStore = create<CheckinState>()(
       longestStreak: 0,
       totalDays: 0,
       monthlyPatchCards: 2,
+
+      initFromServer: async () => {
+        try {
+          const { records, currentStreak, totalDays } = await api.getCheckin()
+          set({ records, currentStreak, totalDays, longestStreak: currentStreak })
+        } catch {}
+      },
 
       checkin: (date, data) => {
         const state = get()
@@ -64,6 +73,11 @@ export const useCheckinStore = create<CheckinState>()(
           longestStreak: Math.max(state.longestStreak, newStreak),
           totalDays: state.totalDays + 1,
         })
+
+        api.checkin(date, {
+          coinEarned: newRecord.coinEarned,
+          expEarned: newRecord.expEarned,
+        }).catch(() => {})
       },
 
       usePatchCard: (date) => {

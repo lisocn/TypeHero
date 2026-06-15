@@ -10,8 +10,9 @@ export default function Login() {
   const [nickname, setNickname] = useState('')
   const [selectedAvatar, setSelectedAvatar] = useState<string>('astronaut')
   const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
 
-  const handleCreate = () => {
+  const handleCreate = async () => {
     const trimmed = nickname.trim()
     if (trimmed.length < 2 || trimmed.length > 12) {
       setError('昵称需要2-12个字符')
@@ -21,8 +22,14 @@ export default function Login() {
       setError('昵称不允许特殊字符')
       return
     }
-    createUser(trimmed, selectedAvatar as never)
-    navigate('/adventure')
+    setLoading(true)
+    try {
+      await createUser(trimmed, selectedAvatar as never)
+      navigate('/textbook-select')
+    } catch (e: any) {
+      setError(e.message || '注册失败')
+    }
+    setLoading(false)
   }
 
   return (
@@ -62,8 +69,8 @@ export default function Login() {
           </div>
         </div>
 
-        <Button size="lg" className="w-full" onClick={handleCreate}>
-          ⚔️ 创建英雄
+        <Button size="lg" className="w-full" onClick={handleCreate} disabled={loading}>
+          {loading ? '创建中...' : '⚔️ 创建英雄'}
         </Button>
       </div>
     </div>

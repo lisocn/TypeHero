@@ -1,4 +1,5 @@
 import { Routes, Route } from 'react-router-dom'
+import { useEffect } from 'react'
 import MainLayout from './layouts/MainLayout'
 import Home from './pages/Home'
 import Login from './pages/Login'
@@ -12,14 +13,23 @@ import Achievements from './pages/Achievements'
 import Leaderboard from './pages/Leaderboard'
 import Shop from './pages/Shop'
 import ParentDashboard from './pages/ParentDashboard'
+import TextbookSelect from './pages/TextbookSelect'
 import NotFound from './pages/NotFound'
+import { useUserStore } from './stores/userStore'
 
 export default function App() {
+  const initFromServer = useUserStore(s => s.initFromServer)
+
+  useEffect(() => {
+    initFromServer()
+  }, [initFromServer])
+
   return (
     <Routes>
       <Route element={<MainLayout />}>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/textbook-select" element={<TextbookSelect />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/adventure" element={<Adventure />} />
         <Route path="/adventure/:chapterId/:levelId" element={<Game />} />

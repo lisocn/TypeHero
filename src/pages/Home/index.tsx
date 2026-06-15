@@ -8,7 +8,7 @@ export default function Home() {
   const isLoggedIn = useUserStore(s => s.isLoggedIn)
 
   useEffect(() => {
-    if (isLoggedIn) navigate('/adventure')
+    if (isLoggedIn) navigate('/textbook-select')
   }, [isLoggedIn, navigate])
 
   return (

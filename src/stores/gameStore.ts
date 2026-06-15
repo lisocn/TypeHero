@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
+import { api } from '../utils/api'
 
 export interface LevelProgress {
   levelId: string
@@ -21,6 +22,7 @@ interface GameState {
   chapterProgress: Record<string, ChapterProgress>
   currentChapterId: string | null
   currentLevelId: string | null
+  initFromServer: () => Promise<void>
   setCurrentLevel: (chapterId: string, levelId: string) => void
   updateLevelProgress: (chapterId: string, levelId: string, progress: Partial<LevelProgress>) => void
   isLevelUnlocked: (chapterId: string, levelId: string, allLevels: string[]) => boolean
@@ -34,6 +36,23 @@ export const useGameStore = create<GameState>()(
       chapterProgress: {},
       currentChapterId: null,
       currentLevelId: null,
+
+      initFromServer: async () => {
+        try {
+          const { progress } = await api.getProgress()
+          const chapterProgress: Record<string, ChapterProgress> = {}
+          Object.entries(progress).forEach(([chapterId, levels]) => {
+          const completedLevels = Object.values(levels).filter(l => l.completed).length
+            chapterProgress[chapterId] = {
+              chapterId,
+              levels,
+              bossUnlocked: completedLevels >= 6,
+              bossCompleted: false,
+            }
+          })
+          set({ chapterProgress })
+        } catch {}
+      },
 
       setCurrentLevel: (chapterId, levelId) => {
         set({ currentChapterId: chapterId, currentLevelId: levelId })
@@ -77,6 +96,13 @@ export const useGameStore = create<GameState>()(
             [chapterId]: chapter,
           },
         })
+
+        api.saveProgress(chapterId, levelId, {
+          bestStars: updated.bestStars,
+          bestWpm: updated.bestWpm,
+          bestAccuracy: updated.bestAccuracy,
+          completed: updated.completed,
+        }).catch(() => {})
       },
 
       isLevelUnlocked: (chapterId, levelId, allLevels) => {
