@@ -1,6 +1,7 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTypingEngine } from '../../hooks/useTypingEngine'
+import { useSound } from '../../hooks/useSound'
 import { useUserStore } from '../../stores/userStore'
 import VirtualKeyboard from '../../components/VirtualKeyboard'
 import Button from '../../components/Button'
@@ -17,10 +18,13 @@ export default function SpeedMode() {
   const navigate = useNavigate()
   const addExp = useUserStore(s => s.addExp)
   const addCoin = useUserStore(s => s.addCoin)
+  const { play, playCombo, resetCombo } = useSound()
   const [bestWpm, setBestWpm] = useState(() => {
     return parseInt(localStorage.getItem('typehero-speed-best') || '0')
   })
   const [isStarted, setIsStarted] = useState(false)
+  const prevComboRef = useRef(0)
+  const prevIndexRef = useRef(0)
 
   const content = useMemo(() => {
     const shuffled = [...SPEED_WORDS].sort(() => Math.random() - 0.5)
@@ -33,6 +37,7 @@ export default function SpeedMode() {
     timeLimit: 60,
     difficulty: 'medium',
     onComplete: (result) => {
+      play('victory')
       if (result.wpm > bestWpm) {
         setBestWpm(result.wpm)
         localStorage.setItem('typehero-speed-best', String(result.wpm))
@@ -41,6 +46,19 @@ export default function SpeedMode() {
       addCoin(result.coin)
     },
   })
+
+  // Keystroke sounds
+  useEffect(() => {
+    if (engine.status !== 'playing' || engine.currentIndex === prevIndexRef.current) return
+    prevIndexRef.current = engine.currentIndex
+    if (engine.combo > prevComboRef.current) {
+      play('click')
+      playCombo(engine.combo)
+    } else if (engine.combo === 0 && prevComboRef.current > 0) {
+      play('buzz')
+    }
+    prevComboRef.current = engine.combo
+  }, [engine.currentIndex, engine.combo, engine.status, play, playCombo])
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -60,7 +78,7 @@ export default function SpeedMode() {
         <div className="text-center py-12">
           <p className="text-[var(--color-text-secondary)] mb-4">60秒内输入尽可能多的单词</p>
           <p className="text-sm text-[var(--color-text-secondary)] mb-6">历史最高: {bestWpm} WPM</p>
-          <Button size="lg" onClick={() => { setIsStarted(true); engine.start() }}>🚀 开始挑战</Button>
+          <Button size="lg" onClick={() => { resetCombo(); prevComboRef.current = 0; prevIndexRef.current = 0; setIsStarted(true); engine.start() }}>🚀 开始挑战</Button>
         </div>
       )}
 
@@ -116,7 +134,7 @@ export default function SpeedMode() {
             <p className="text-[var(--color-accent-gold)] font-bold mb-4">🏆 新纪录！</p>
           )}
           <div className="flex gap-4 justify-center">
-            <Button onClick={() => { engine.reset(); setIsStarted(false) }}>🔄 再来一局</Button>
+            <Button onClick={() => { resetCombo(); prevComboRef.current = 0; prevIndexRef.current = 0; engine.reset(); setIsStarted(false) }}>🔄 再来一局</Button>
             <Button variant="secondary" onClick={() => navigate('/')}>🏠 返回</Button>
           </div>
         </div>

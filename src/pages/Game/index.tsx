@@ -1,8 +1,9 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, useRef } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useGameStore } from '../../stores/gameStore'
 import { useUserStore } from '../../stores/userStore'
 import { useTypingEngine } from '../../hooks/useTypingEngine'
+import { useSound } from '../../hooks/useSound'
 import { TEXTBOOKS } from '../../data/textbooks'
 import VirtualKeyboard from '../../components/VirtualKeyboard'
 import ProgressBar from '../../components/ProgressBar'
@@ -18,6 +19,7 @@ export default function Game() {
   const addExp = useUserStore(s => s.addExp)
   const addCoin = useUserStore(s => s.addCoin)
   const updateStats = useUserStore(s => s.updateStats)
+  const { play, playCombo, resetCombo } = useSound()
 
   const chapter = useMemo(() => TEXTBOOKS.flatMap(tb => tb.chapters).find(c => c.id === chapterId), [chapterId])
   const level = useMemo(() => chapter?.levels.find(l => l.id === levelId), [chapter, levelId])
@@ -30,6 +32,8 @@ export default function Game() {
   const [phase, setPhase] = useState<GamePhase>('countdown')
   const [countdown, setCountdown] = useState(3)
   const [toast, setToast] = useState<string | null>(null)
+  const prevComboRef = useRef(0)
+  const prevIndexRef = useRef(0)
 
   const engine = useTypingEngine({
     mode: (level?.content.mode as 'char' | 'word' | 'sentence' | 'paragraph') || 'char',
@@ -37,6 +41,7 @@ export default function Game() {
     timeLimit: level?.timeLimit ?? 0,
     difficulty: 'medium',
     onComplete: (result) => {
+      play('victory')
       updateLevelProgress(chapterId!, levelId!, {
         bestStars: result.stars,
         bestWpm: result.wpm,
@@ -50,33 +55,55 @@ export default function Game() {
     },
   })
 
+  // Countdown sound
   useEffect(() => {
     if (phase !== 'countdown') return
     if (countdown <= 0) {
+      play('start')
+      resetCombo()
       setPhase('playing')
       engine.start()
       return
     }
+    play('countdown')
     const timer = setTimeout(() => setCountdown(c => c - 1), 1000)
     return () => clearTimeout(timer)
-  }, [phase, countdown, engine])
+  }, [phase, countdown, engine, play, resetCombo])
 
+  // Keystroke sound: detect correct/wrong by tracking combo & index changes
+  useEffect(() => {
+    if (phase !== 'playing') return
+    if (engine.currentIndex === prevIndexRef.current) return
+    prevIndexRef.current = engine.currentIndex
+
+    if (engine.combo > prevComboRef.current) {
+      play('click')
+      playCombo(engine.combo)
+    } else if (engine.combo === 0 && prevComboRef.current > 0) {
+      play('buzz')
+    }
+    prevComboRef.current = engine.combo
+  }, [phase, engine.currentIndex, engine.combo, play, playCombo])
+
+  // Combo toast
   useEffect(() => {
     if (engine.combo >= 50) setToast('🔥 Legendary!')
     else if (engine.combo >= 30) setToast('⚡ Amazing!')
     else if (engine.combo >= 10) setToast('✨ Nice!')
   }, [engine.combo])
 
+  // Escape to pause
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && phase === 'playing') {
+        play('pause')
         engine.pause()
         setPhase('paused')
       }
     }
     window.addEventListener('keydown', handler)
     return () => window.removeEventListener('keydown', handler)
-  }, [phase, engine])
+  }, [phase, engine, play])
 
   if (!chapter || !level) return <div className="text-center py-20 text-white">关卡不存在</div>
 
@@ -131,7 +158,7 @@ export default function Game() {
           <VirtualKeyboard targetKey={engine.currentChar} />
 
           <div className="flex justify-center mt-4">
-            <Button variant="ghost" onClick={() => { engine.pause(); setPhase('paused') }}>
+            <Button variant="ghost" onClick={() => { play('pause'); engine.pause(); setPhase('paused') }}>
               ⏸️ 暂停
             </Button>
           </div>
@@ -143,7 +170,7 @@ export default function Game() {
           <h2 className="text-3xl font-bold text-[var(--color-accent-gold)]">⏸️ 暂停</h2>
           <div className="flex gap-4">
             <Button onClick={() => { engine.resume(); setPhase('playing') }}>▶️ 继续</Button>
-            <Button variant="secondary" onClick={() => { engine.reset(); setCountdown(3); setPhase('countdown') }}>🔄 重新开始</Button>
+            <Button variant="secondary" onClick={() => { engine.reset(); setCountdown(3); prevIndexRef.current = 0; prevComboRef.current = 0; setPhase('countdown') }}>🔄 重新开始</Button>
             <Button variant="ghost" onClick={() => navigate('/adventure')}>🏠 返回地图</Button>
           </div>
         </div>
@@ -154,7 +181,7 @@ export default function Game() {
           <h2 className="text-3xl font-bold text-[var(--color-accent-gold)]">🎉 关卡完成！</h2>
           <div className="flex gap-2 text-4xl">
             {[1, 2, 3].map(i => (
-              <span key={i} className={i <= (engine as any)._lastResult?.stars ? 'text-yellow-400' : 'text-gray-600'}>★</span>
+              <span key={i} className={i <= engine.maxCombo ? 'text-yellow-400' : 'text-gray-600'}>★</span>
             ))}
           </div>
           <div className="grid grid-cols-2 gap-4 text-center">
@@ -168,7 +195,7 @@ export default function Game() {
             </div>
           </div>
           <div className="flex gap-4">
-            <Button onClick={() => { engine.reset(); setCountdown(3); setPhase('countdown') }}>🔄 重玩</Button>
+            <Button onClick={() => { engine.reset(); setCountdown(3); prevIndexRef.current = 0; prevComboRef.current = 0; setPhase('countdown') }}>🔄 重玩</Button>
             <Button variant="secondary" onClick={() => navigate('/adventure')}>🗺️ 返回地图</Button>
           </div>
         </div>
