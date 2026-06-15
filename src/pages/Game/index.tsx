@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { useGameStore } from '../../stores/gameStore'
 import { useUserStore } from '../../stores/userStore'
 import { useTypingEngine } from '../../hooks/useTypingEngine'
-import { CHAPTERS } from '../../data/levelData'
+import { TEXTBOOKS } from '../../data/textbooks'
 import VirtualKeyboard from '../../components/VirtualKeyboard'
 import ProgressBar from '../../components/ProgressBar'
 import Button from '../../components/Button'
@@ -19,8 +19,8 @@ export default function Game() {
   const addCoin = useUserStore(s => s.addCoin)
   const updateStats = useUserStore(s => s.updateStats)
 
-  const chapter = CHAPTERS.find(c => c.id === chapterId)
-  const level = chapter?.levels.find(l => l.id === levelId)
+  const chapter = useMemo(() => TEXTBOOKS.flatMap(tb => tb.chapters).find(c => c.id === chapterId), [chapterId])
+  const level = useMemo(() => chapter?.levels.find(l => l.id === levelId), [chapter, levelId])
 
   const content = useMemo(() => {
     if (!level) return []
