@@ -16,6 +16,10 @@ function saveLocal(ids: string[]) {
   localStorage.setItem(LS_KEY, JSON.stringify(ids))
 }
 
+function getGradeCount(grade: Grade, selected: Set<string>): number {
+  return getTextbooksByGrade(grade).filter(tb => selected.has(tb.id)).length
+}
+
 export default function TextbookSelect() {
   const navigate = useNavigate()
   const [selectedGrade, setSelectedGrade] = useState<Grade>(3)
@@ -48,6 +52,10 @@ export default function TextbookSelect() {
     })
   }
 
+  const clearAll = () => {
+    setSelectedIds(new Set())
+  }
+
   const handleSave = async () => {
     setSaving(true)
     const ids = Array.from(selectedIds)
@@ -73,20 +81,38 @@ export default function TextbookSelect() {
       <h1 className="text-3xl font-bold text-center mb-2 text-[var(--color-accent-gold)]">📚 选择教材</h1>
       <p className="text-center text-[var(--color-text-secondary)] mb-6">选择你要练习的教材，随时可以修改</p>
 
-      <div className="flex gap-2 mb-6 justify-center">
-        {GRADES.map(g => (
+      <div className="flex gap-2 mb-6 justify-center items-center">
+        {GRADES.map(g => {
+          const count = getGradeCount(g, selectedIds)
+          return (
+            <button
+              key={g}
+              onClick={() => setSelectedGrade(g)}
+              className={`px-5 py-3 rounded-xl text-lg font-bold transition-all cursor-pointer ${
+                selectedGrade === g
+                  ? 'bg-[var(--color-accent-blue)] text-white scale-105'
+                  : 'bg-[var(--color-bg-secondary)] text-[var(--color-text-secondary)] hover:bg-slate-700'
+              }`}
+            >
+              {GRADE_LABELS[g]}
+              {count > 0 && (
+                <span className={`ml-1.5 text-sm px-1.5 py-0.5 rounded-full ${
+                  selectedGrade === g ? 'bg-white/20' : 'bg-slate-600'
+                }`}>
+                  {count}
+                </span>
+              )}
+            </button>
+          )
+        })}
+        {selectedIds.size > 0 && (
           <button
-            key={g}
-            onClick={() => setSelectedGrade(g)}
-            className={`px-6 py-3 rounded-xl text-lg font-bold transition-all cursor-pointer ${
-              selectedGrade === g
-                ? 'bg-[var(--color-accent-blue)] text-white scale-105'
-                : 'bg-[var(--color-bg-secondary)] text-[var(--color-text-secondary)] hover:bg-slate-700'
-            }`}
+            onClick={clearAll}
+            className="px-4 py-2 rounded-lg text-sm font-semibold text-red-400 hover:text-red-300 hover:bg-red-900/30 transition-all cursor-pointer ml-2"
           >
-            {GRADE_LABELS[g]}
+            🗑️ 清空
           </button>
-        ))}
+        )}
       </div>
 
       {loading ? (
