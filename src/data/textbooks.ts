@@ -192,6 +192,118 @@ const TEXTBOOKS: Textbook[] = [
           ]),
         ],
       },
+      {
+        id: 'eng-4a-ch3', title: 'My Friends', subtitle: 'Unit 3 我的朋友', order: 3, icon: '👫',
+        levels: [
+          lvl('eng-4a-ch3-l1', '朋友字母', 'warmup', 1, 'char', [
+            { display: 'f', input: 'f' }, { display: 'r', input: 'r' }, { display: 'i', input: 'i' },
+            { display: 'e', input: 'e' }, { display: 'n', input: 'n' }, { display: 'd', input: 'd' },
+          ]),
+          lvl('eng-4a-ch3-l2', '外貌词汇', 'basic', 2, 'word', [
+            { display: 'tall', input: 'tall' }, { display: 'short', input: 'short' },
+            { display: 'strong', input: 'strong' }, { display: 'thin', input: 'thin' },
+            { display: 'quiet', input: 'quiet' }, { display: 'friendly', input: 'friendly' },
+            { display: 'glasses', input: 'glasses' }, { display: 'shoe', input: 'shoe' },
+          ]),
+          lvl('eng-4a-ch3-l3', '描述朋友', 'advanced', 3, 'sentence', [
+            { display: 'He is tall and strong.', input: 'He is tall and strong.' },
+            { display: 'She has long hair.', input: 'She has long hair.' },
+            { display: 'He has glasses.', input: 'He has glasses.' },
+            { display: 'My friend is very friendly.', input: 'My friend is very friendly.' },
+          ]),
+          lvl('eng-4a-ch3-l4', '猜猜他是谁', 'boss', 4, 'paragraph', [
+            { display: 'I have a good friend.', input: 'I have a good friend.' },
+            { display: 'He is tall and thin.', input: 'He is tall and thin.' },
+            { display: 'He has short hair and big eyes.', input: 'He has short hair and big eyes.' },
+            { display: 'He is very quiet.', input: 'He is very quiet.' },
+            { display: 'Who is he?', input: 'Who is he?' },
+          ]),
+        ],
+      },
+      {
+        id: 'eng-4a-ch4', title: 'My Home', subtitle: 'Unit 4 我的家', order: 4, icon: '🏠',
+        levels: [
+          lvl('eng-4a-ch4-l1', '房间字母', 'warmup', 1, 'char', [
+            { display: 'h', input: 'h' }, { display: 'o', input: 'o' }, { display: 'm', input: 'm' },
+            { display: 'e', input: 'e' }, { display: 'b', input: 'b' }, { display: 'd', input: 'd' },
+          ]),
+          lvl('eng-4a-ch4-l2', '房间词汇', 'basic', 2, 'word', [
+            { display: 'bedroom', input: 'bedroom' }, { display: 'living room', input: 'living room' },
+            { display: 'kitchen', input: 'kitchen' }, { display: 'bathroom', input: 'bathroom' },
+            { display: 'study', input: 'study' }, { display: 'phone', input: 'phone' },
+            { display: 'table', input: 'table' }, { display: 'sofa', input: 'sofa' },
+          ]),
+          lvl('eng-4a-ch4-l3', '描述位置', 'advanced', 3, 'sentence', [
+            { display: 'Where are my keys?', input: 'Where are my keys?' },
+            { display: 'Are they on the table?', input: 'Are they on the table?' },
+            { display: 'No, they are not.', input: 'No, they are not.' },
+            { display: 'They are in the kitchen.', input: 'They are in the kitchen.' },
+          ]),
+          lvl('eng-4a-ch4-l4', '我的家', 'boss', 4, 'paragraph', [
+            { display: 'This is my home.', input: 'This is my home.' },
+            { display: 'I have a big living room.', input: 'I have a big living room.' },
+            { display: 'My bedroom is small but nice.', input: 'My bedroom is small but nice.' },
+            { display: 'I love my home.', input: 'I love my home.' },
+          ]),
+        ],
+      },
+      {
+        id: 'eng-4a-ch5', title: "Dinner's Ready", subtitle: 'Unit 5 晚餐准备好了', order: 5, icon: '🍽️',
+        levels: [
+          lvl('eng-4a-ch5-l1', '食物字母', 'warmup', 1, 'char', [
+            { display: 'b', input: 'b' }, { display: 'e', input: 'e' }, { display: 'e', input: 'e' },
+            { display: 'f', input: 'f' }, { display: 'k', input: 'k' },
+          ]),
+          lvl('eng-4a-ch5-l2', '食物词汇', 'basic', 2, 'word', [
+            { display: 'beef', input: 'beef' }, { display: 'chicken', input: 'chicken' },
+            { display: 'noodles', input: 'noodles' }, { display: 'soup', input: 'soup' },
+            { display: 'vegetable', input: 'vegetable' }, { display: 'rice', input: 'rice' },
+            { display: 'bread', input: 'bread' }, { display: 'milk', input: 'milk' },
+          ]),
+          lvl('eng-4a-ch5-l3', '点餐句子', 'advanced', 3, 'sentence', [
+            { display: "What's for dinner?", input: "What's for dinner?" },
+            { display: 'What would you like?', input: 'What would you like?' },
+            { display: 'I would like some soup.', input: 'I would like some soup.' },
+            { display: 'Help yourself.', input: 'Help yourself.' },
+          ]),
+          lvl('eng-4a-ch5-l4', '晚餐对话', 'boss', 4, 'paragraph', [
+            { display: 'Mum, I am hungry.', input: 'Mum, I am hungry.' },
+            { display: 'What would you like for dinner?', input: 'What would you like for dinner?' },
+            { display: 'I would like some beef and noodles.', input: 'I would like some beef and noodles.' },
+            { display: 'Would you like some soup?', input: 'Would you like some soup?' },
+            { display: 'Yes, please.', input: 'Yes, please.' },
+          ]),
+        ],
+      },
+      {
+        id: 'eng-4a-ch6', title: 'Meet My Family', subtitle: 'Unit 6 见见我的家人', order: 6, icon: '👨‍👩‍👧‍👦',
+        levels: [
+          lvl('eng-4a-ch6-l1', '职业字母', 'warmup', 1, 'char', [
+            { display: 'd', input: 'd' }, { display: 'o', input: 'o' }, { display: 'c', input: 'c' },
+            { display: 'n', input: 'n' }, { display: 'r', input: 'r' },
+          ]),
+          lvl('eng-4a-ch6-l2', '家庭词汇', 'basic', 2, 'word', [
+            { display: 'parents', input: 'parents' }, { display: 'uncle', input: 'uncle' },
+            { display: 'aunt', input: 'aunt' }, { display: 'baby', input: 'baby' },
+            { display: 'doctor', input: 'doctor' }, { display: 'driver', input: 'driver' },
+            { display: 'farmer', input: 'farmer' }, { display: 'nurse', input: 'nurse' },
+          ]),
+          lvl('eng-4a-ch6-l3', '介绍家人', 'advanced', 3, 'sentence', [
+            { display: 'How many people are there in your family?', input: 'How many people are there in your family?' },
+            { display: 'My father is a doctor.', input: 'My father is a doctor.' },
+            { display: 'My mother is a nurse.', input: 'My mother is a nurse.' },
+            { display: 'I love my family.', input: 'I love my family.' },
+          ]),
+          lvl('eng-4a-ch6-l4', '家庭介绍', 'boss', 4, 'paragraph', [
+            { display: 'This is my family.', input: 'This is my family.' },
+            { display: 'My father is tall and strong.', input: 'My father is tall and strong.' },
+            { display: 'He is a doctor.', input: 'He is a doctor.' },
+            { display: 'My mother is beautiful.', input: 'My mother is beautiful.' },
+            { display: 'She is a teacher.', input: 'She is a teacher.' },
+            { display: 'I love them very much.', input: 'I love them very much.' },
+          ]),
+        ],
+      },
     ],
   },
   {
@@ -251,10 +363,121 @@ const TEXTBOOKS: Textbook[] = [
           ]),
         ],
       },
+      {
+        id: 'eng-4b-ch3', title: 'My School Calendar', subtitle: 'Unit 3 学校日历', order: 3, icon: '📅',
+        levels: [
+          lvl('eng-4b-ch3-l1', '月份字母', 'warmup', 1, 'char', [
+            { display: 'j', input: 'j' }, { display: 'f', input: 'f' }, { display: 'm', input: 'm' },
+            { display: 'a', input: 'a' }, { display: 's', input: 's' }, { display: 'd', input: 'd' },
+          ]),
+          lvl('eng-4b-ch3-l2', '月份词汇', 'basic', 2, 'word', [
+            { display: 'January', input: 'January' }, { display: 'February', input: 'February' },
+            { display: 'March', input: 'March' }, { display: 'April', input: 'April' },
+            { display: 'May', input: 'May' }, { display: 'June', input: 'June' },
+            { display: 'July', input: 'July' }, { display: 'August', input: 'August' },
+          ]),
+          lvl('eng-4b-ch3-l3', '节日句子', 'advanced', 3, 'sentence', [
+            { display: 'When is the school trip?', input: 'When is the school trip?' },
+            { display: 'It is in May.', input: 'It is in May.' },
+            { display: 'We have a singing contest in April.', input: 'We have a singing contest in April.' },
+            { display: 'I like June best.', input: 'I like June best.' },
+          ]),
+          lvl('eng-4b-ch3-l4', '学校活动', 'boss', 4, 'paragraph', [
+            { display: 'When is the sports meet?', input: 'When is the sports meet?' },
+            { display: 'It is in April.', input: 'It is in April.' },
+            { display: 'We have a school trip in May.', input: 'We have a school trip in May.' },
+            { display: 'The singing contest is in June.', input: 'The singing contest is in June.' },
+            { display: 'I love school activities!', input: 'I love school activities!' },
+          ]),
+        ],
+      },
+      {
+        id: 'eng-4b-ch4', title: 'At the Farm', subtitle: 'Unit 4 在农场', order: 4, icon: '🐔',
+        levels: [
+          lvl('eng-4b-ch4-l1', '农场字母', 'warmup', 1, 'char', [
+            { display: 'c', input: 'c' }, { display: 'o', input: 'o' }, { display: 'w', input: 'w' },
+            { display: 'h', input: 'h' }, { display: 'e', input: 'e' }, { display: 'p', input: 'p' },
+          ]),
+          lvl('eng-4b-ch4-l2', '动物词汇', 'basic', 2, 'word', [
+            { display: 'horse', input: 'horse' }, { display: 'cow', input: 'cow' },
+            { display: 'hen', input: 'hen' }, { display: 'sheep', input: 'sheep' },
+            { display: 'lamb', input: 'lamb' }, { display: 'goat', input: 'goat' },
+            { display: 'tomato', input: 'tomato' }, { display: 'potato', input: 'potato' },
+          ]),
+          lvl('eng-4b-ch4-l3', '农场句子', 'advanced', 3, 'sentence', [
+            { display: 'What are these?', input: 'What are these?' },
+            { display: 'They are tomatoes.', input: 'They are tomatoes.' },
+            { display: 'Are they horses?', input: 'Are they horses?' },
+            { display: 'Yes, they are.', input: 'Yes, they are.' },
+          ]),
+          lvl('eng-4b-ch4-l4', '参观农场', 'boss', 4, 'paragraph', [
+            { display: 'Welcome to the farm!', input: 'Welcome to the farm!' },
+            { display: 'Look! What are these?', input: 'Look! What are these?' },
+            { display: 'They are sheep.', input: 'They are sheep.' },
+            { display: 'I like the tomatoes.', input: 'I like the tomatoes.' },
+            { display: 'The farm is so big!', input: 'The farm is so big!' },
+          ]),
+        ],
+      },
+      {
+        id: 'eng-4b-ch5', title: 'My Clothes', subtitle: 'Unit 5 我的衣服', order: 5, icon: '👗',
+        levels: [
+          lvl('eng-4b-ch5-l1', '衣服字母', 'warmup', 1, 'char', [
+            { display: 'c', input: 'c' }, { display: 'o', input: 'o' }, { display: 'a', input: 'a' },
+            { display: 't', input: 't' }, { display: 's', input: 's' }, { display: 'k', input: 'k' },
+          ]),
+          lvl('eng-4b-ch5-l2', '衣服词汇', 'basic', 2, 'word', [
+            { display: 'dress', input: 'dress' }, { display: 'skirt', input: 'skirt' },
+            { display: 'shirt', input: 'shirt' }, { display: 'jacket', input: 'jacket' },
+            { display: 'sweater', input: 'sweater' }, { display: 'pants', input: 'pants' },
+            { display: 'socks', input: 'socks' }, { display: 'shoes', input: 'shoes' },
+          ]),
+          lvl('eng-4b-ch5-l3', '衣服句子', 'advanced', 3, 'sentence', [
+            { display: 'Whose coat is this?', input: 'Whose coat is this?' },
+            { display: 'It is mine.', input: 'It is mine.' },
+            { display: 'I like that green skirt.', input: 'I like that green skirt.' },
+            { display: 'These are my pants.', input: 'These are my pants.' },
+          ]),
+          lvl('eng-4b-ch5-l4', '穿衣搭配', 'boss', 4, 'paragraph', [
+            { display: 'Are these your shoes?', input: 'Are these your shoes?' },
+            { display: 'No, they are not.', input: 'No, they are not.' },
+            { display: 'Whose pants are those?', input: 'Whose pants are those?' },
+            { display: 'They are my sister\'s.', input: 'They are my sister\'s.' },
+            { display: 'I like your dress.', input: 'I like your dress.' },
+          ]),
+        ],
+      },
+      {
+        id: 'eng-4b-ch6', title: 'Shopping', subtitle: 'Unit 6 购物', order: 6, icon: '🛒',
+        levels: [
+          lvl('eng-4b-ch6-l1', '购物字母', 'warmup', 1, 'char', [
+            { display: 'g', input: 'g' }, { display: 'o', input: 'o' }, { display: 's', input: 's' },
+            { display: 'h', input: 'h' }, { display: 'p', input: 'p' },
+          ]),
+          lvl('eng-4b-ch6-l2', '购物词汇', 'basic', 2, 'word', [
+            { display: 'sunglasses', input: 'sunglasses' }, { display: 'gloves', input: 'gloves' },
+            { display: 'scarf', input: 'scarf' }, { display: 'umbrella', input: 'umbrella' },
+            { display: 'pretty', input: 'pretty' }, { display: 'cheap', input: 'cheap' },
+            { display: 'expensive', input: 'expensive' }, { display: 'nice', input: 'nice' },
+          ]),
+          lvl('eng-4b-ch6-l3', '购物句子', 'advanced', 3, 'sentence', [
+            { display: 'Can I help you?', input: 'Can I help you?' },
+            { display: 'How much is this skirt?', input: 'How much is this skirt?' },
+            { display: 'It is eighty-nine yuan.', input: 'It is eighty-nine yuan.' },
+            { display: 'That is too expensive.', input: 'That is too expensive.' },
+          ]),
+          lvl('eng-4b-ch6-l4', '购物对话', 'boss', 4, 'paragraph', [
+            { display: 'Can I help you?', input: 'Can I help you?' },
+            { display: 'Yes, I want a dress.', input: 'Yes, I want a dress.' },
+            { display: 'How about this one?', input: 'How about this one?' },
+            { display: 'It is pretty. How much?', input: 'It is pretty. How much?' },
+            { display: 'It is ninety-nine yuan.', input: 'It is ninety-nine yuan.' },
+            { display: 'I will take it.', input: 'I will take it.' },
+          ]),
+        ],
+      },
     ],
   },
-
-  // ==================== ENGLISH GRADE 5 ====================
   {
     id: 'eng-5a', title: '五年级上册', subtitle: 'PEP 五年级上', subject: 'english', grade: 5, semester: 'a',
     chapters: [
@@ -311,6 +534,120 @@ const TEXTBOOKS: Textbook[] = [
             { display: 'What about Wednesdays?', input: 'What about Wednesdays?' },
             { display: 'I have English and PE.', input: 'I have English and PE.' },
             { display: 'I like Tuesdays and Wednesdays.', input: 'I like Tuesdays and Wednesdays.' },
+          ]),
+        ],
+      },
+      {
+        id: 'eng-5a-ch3', title: 'What Would You Like?', subtitle: 'Unit 3 你想要什么', order: 3, icon: '🍔',
+        levels: [
+          lvl('eng-5a-ch3-l1', '食物字母', 'warmup', 1, 'char', [
+            { display: 's', input: 's' }, { display: 'a', input: 'a' }, { display: 'l', input: 'l' },
+            { display: 'd', input: 'd' }, { display: 't', input: 't' },
+          ]),
+          lvl('eng-5a-ch3-l2', '食物词汇', 'basic', 2, 'word', [
+            { display: 'sandwich', input: 'sandwich' }, { display: 'salad', input: 'salad' },
+            { display: 'hamburger', input: 'hamburger' }, { display: 'ice cream', input: 'ice cream' },
+            { display: 'tea', input: 'tea' }, { display: 'fresh', input: 'fresh' },
+            { display: 'healthy', input: 'healthy' }, { display: 'delicious', input: 'delicious' },
+          ]),
+          lvl('eng-5a-ch3-l3', '点餐句子', 'advanced', 3, 'sentence', [
+            { display: 'What would you like to eat?', input: 'What would you like to eat?' },
+            { display: 'I would like a sandwich.', input: 'I would like a sandwich.' },
+            { display: 'What would you like to drink?', input: 'What would you like to drink?' },
+            { display: 'I would like some tea.', input: 'I would like some tea.' },
+          ]),
+          lvl('eng-5a-ch3-l4', '餐厅对话', 'boss', 4, 'paragraph', [
+            { display: 'I am hungry.', input: 'I am hungry.' },
+            { display: 'What would you like to eat?', input: 'What would you like to eat?' },
+            { display: 'A sandwich, please.', input: 'A sandwich, please.' },
+            { display: 'What would you like to drink?', input: 'What would you like to drink?' },
+            { display: 'Some milk, please.', input: 'Some milk, please.' },
+            { display: 'OK. Here you are.', input: 'OK. Here you are.' },
+          ]),
+        ],
+      },
+      {
+        id: 'eng-5a-ch4', title: 'What Can You Do?', subtitle: 'Unit 4 你能做什么', order: 4, icon: '💪',
+        levels: [
+          lvl('eng-5a-ch4-l1', '能力字母', 'warmup', 1, 'char', [
+            { display: 'c', input: 'c' }, { display: 'a', input: 'a' }, { display: 'n', input: 'n' },
+            { display: 'd', input: 'd' }, { display: 'o', input: 'o' },
+          ]),
+          lvl('eng-5a-ch4-l2', '能力词汇', 'basic', 2, 'word', [
+            { display: 'sing', input: 'sing' }, { display: 'dance', input: 'dance' },
+            { display: 'draw cartoons', input: 'draw cartoons' }, { display: 'do kung fu', input: 'do kung fu' },
+            { display: 'play the pipa', input: 'play the pipa' }, { display: 'cook', input: 'cook' },
+            { display: 'swim', input: 'swim' }, { display: 'speak English', input: 'speak English' },
+          ]),
+          lvl('eng-5a-ch4-l3', '能力句子', 'advanced', 3, 'sentence', [
+            { display: 'What can you do for the party?', input: 'What can you do for the party?' },
+            { display: 'I can sing English songs.', input: 'I can sing English songs.' },
+            { display: 'Can you do kung fu?', input: 'Can you do kung fu?' },
+            { display: 'Yes, I can.', input: 'Yes, I can.' },
+          ]),
+          lvl('eng-5a-ch4-l4', '才艺展示', 'boss', 4, 'paragraph', [
+            { display: 'We will have a party.', input: 'We will have a party.' },
+            { display: 'What can you do, Mike?', input: 'What can you do, Mike?' },
+            { display: 'I can sing and dance.', input: 'I can sing and dance.' },
+            { display: 'What about you, John?', input: 'What about you, John?' },
+            { display: 'I can do kung fu.', input: 'I can do kung fu.' },
+            { display: 'Wonderful!', input: 'Wonderful!' },
+          ]),
+        ],
+      },
+      {
+        id: 'eng-5a-ch5', title: 'There Is a Big Bed', subtitle: 'Unit 5 有一张大床', order: 5, icon: '🛏️',
+        levels: [
+          lvl('eng-5a-ch5-l1', '房间字母', 'warmup', 1, 'char', [
+            { display: 'b', input: 'b' }, { display: 'e', input: 'e' }, { display: 'd', input: 'd' },
+            { display: 'p', input: 'p' }, { display: 'l', input: 'l' },
+          ]),
+          lvl('eng-5a-ch5-l2', '家具词汇', 'basic', 2, 'word', [
+            { display: 'clock', input: 'clock' }, { display: 'plant', input: 'plant' },
+            { display: 'bottle', input: 'bottle' }, { display: 'bike', input: 'bike' },
+            { display: 'photo', input: 'photo' }, { display: 'front', input: 'front' },
+            { display: 'between', input: 'between' }, { display: 'above', input: 'above' },
+          ]),
+          lvl('eng-5a-ch5-l3', '位置句子', 'advanced', 3, 'sentence', [
+            { display: 'There is a big bed.', input: 'There is a big bed.' },
+            { display: 'There is a photo above the bed.', input: 'There is a photo above the bed.' },
+            { display: 'The clock is in front of the door.', input: 'The clock is in front of the door.' },
+            { display: 'There are many books on the desk.', input: 'There are many books on the desk.' },
+          ]),
+          lvl('eng-5a-ch5-l4', '我的房间', 'boss', 4, 'paragraph', [
+            { display: 'This is my room.', input: 'This is my room.' },
+            { display: 'There is a big bed and a nice desk.', input: 'There is a big bed and a nice desk.' },
+            { display: 'There is a photo above my bed.', input: 'There is a photo above my bed.' },
+            { display: 'My books are on the shelf.', input: 'My books are on the shelf.' },
+            { display: 'I love my room.', input: 'I love my room.' },
+          ]),
+        ],
+      },
+      {
+        id: 'eng-5a-ch6', title: 'In a Nature Park', subtitle: 'Unit 6 在自然公园', order: 6, icon: '🌲',
+        levels: [
+          lvl('eng-5a-ch6-l1', '自然字母', 'warmup', 1, 'char', [
+            { display: 'p', input: 'p' }, { display: 'l', input: 'l' }, { display: 'r', input: 'r' },
+            { display: 'v', input: 'v' }, { display: 'l', input: 'l' },
+          ]),
+          lvl('eng-5a-ch6-l2', '自然词汇', 'basic', 2, 'word', [
+            { display: 'forest', input: 'forest' }, { display: 'river', input: 'river' },
+            { display: 'lake', input: 'lake' }, { display: 'mountain', input: 'mountain' },
+            { display: 'hill', input: 'hill' }, { display: 'tree', input: 'tree' },
+            { display: 'bridge', input: 'bridge' }, { display: 'village', input: 'village' },
+          ]),
+          lvl('eng-5a-ch6-l3', '自然句子', 'advanced', 3, 'sentence', [
+            { display: 'Is there a river in the park?', input: 'Is there a river in the park?' },
+            { display: 'Yes, there is.', input: 'Yes, there is.' },
+            { display: 'Are there any mountains?', input: 'Are there any mountains?' },
+            { display: 'No, there are not.', input: 'No, there are not.' },
+          ]),
+          lvl('eng-5a-ch6-l4', '自然公园', 'boss', 4, 'paragraph', [
+            { display: 'Let us go to the nature park!', input: 'Let us go to the nature park!' },
+            { display: 'Is there a lake?', input: 'Is there a lake?' },
+            { display: 'Yes, there is a beautiful lake.', input: 'Yes, there is a beautiful lake.' },
+            { display: 'Are there any flowers?', input: 'Are there any flowers?' },
+            { display: 'Yes, there are many flowers.', input: 'Yes, there are many flowers.' },
           ]),
         ],
       },
@@ -376,10 +713,121 @@ const TEXTBOOKS: Textbook[] = [
           ]),
         ],
       },
+      {
+        id: 'eng-5b-ch3', title: 'My School Calendar', subtitle: 'Unit 3 我的校历', order: 3, icon: '📆',
+        levels: [
+          lvl('eng-5b-ch3-l1', '月份字母', 'warmup', 1, 'char', [
+            { display: 's', input: 's' }, { display: 'e', input: 'e' }, { display: 'p', input: 'p' },
+            { display: 'o', input: 'o' }, { display: 'n', input: 'n' },
+          ]),
+          lvl('eng-5b-ch3-l2', '月份词汇', 'basic', 2, 'word', [
+            { display: 'September', input: 'September' }, { display: 'October', input: 'October' },
+            { display: 'November', input: 'November' }, { display: 'December', input: 'December' },
+            { display: 'New Year', input: 'New Year' }, { display: 'Christmas', input: 'Christmas' },
+            { display: 'summer vacation', input: 'summer vacation' }, { display: 'sports meet', input: 'sports meet' },
+          ]),
+          lvl('eng-5b-ch3-l3', '月份句子', 'advanced', 3, 'sentence', [
+            { display: 'When is the sports meet?', input: 'When is the sports meet?' },
+            { display: 'It is in October.', input: 'It is in October.' },
+            { display: 'When is the school trip?', input: 'When is the school trip?' },
+            { display: 'It is in November.', input: 'It is in November.' },
+          ]),
+          lvl('eng-5b-ch3-l4', '学校活动', 'boss', 4, 'paragraph', [
+            { display: 'We have a singing contest in September.', input: 'We have a singing contest in September.' },
+            { display: 'The sports meet is in October.', input: 'The sports meet is in October.' },
+            { display: 'We have a school trip in November.', input: 'We have a school trip in November.' },
+            { display: 'Christmas is in December.', input: 'Christmas is in December.' },
+          ]),
+        ],
+      },
+      {
+        id: 'eng-5b-ch4', title: 'When Is Easter?', subtitle: 'Unit 4 复活节是什么时候', order: 4, icon: '🐣',
+        levels: [
+          lvl('eng-5b-ch4-l1', '序数词', 'warmup', 1, 'char', [
+            { display: 'f', input: 'f' }, { display: 'i', input: 'i' }, { display: 'r', input: 'r' },
+            { display: 's', input: 's' }, { display: 't', input: 't' },
+          ]),
+          lvl('eng-5b-ch4-l2', '序数词', 'basic', 2, 'word', [
+            { display: 'first', input: 'first' }, { display: 'second', input: 'second' },
+            { display: 'third', input: 'third' }, { display: 'fourth', input: 'fourth' },
+            { display: 'fifth', input: 'fifth' }, { display: 'twelfth', input: 'twelfth' },
+            { display: 'twentieth', input: 'twentieth' }, { display: 'special', input: 'special' },
+          ]),
+          lvl('eng-5b-ch4-l3', '日期句子', 'advanced', 3, 'sentence', [
+            { display: 'When is your birthday?', input: 'When is your birthday?' },
+            { display: 'It is on April fourth.', input: 'It is on April fourth.' },
+            { display: 'When is Mother\'s Day?', input: "When is Mother's Day?" },
+            { display: 'It is in May.', input: 'It is in May.' },
+          ]),
+          lvl('eng-5b-ch4-l4', '生日对话', 'boss', 4, 'paragraph', [
+            { display: 'When is your birthday?', input: 'When is your birthday?' },
+            { display: 'My birthday is on January first.', input: 'My birthday is on January first.' },
+            { display: 'That is New Year\'s Day!', input: "That is New Year's Day!" },
+            { display: 'Yes, it is very special.', input: 'Yes, it is very special.' },
+            { display: 'Happy birthday!', input: 'Happy birthday!' },
+          ]),
+        ],
+      },
+      {
+        id: 'eng-5b-ch5', title: 'Whose Dog Is It?', subtitle: 'Unit 5 这是谁的狗', order: 5, icon: '🐕',
+        levels: [
+          lvl('eng-5b-ch5-l1', '动物字母', 'warmup', 1, 'char', [
+            { display: 'd', input: 'd' }, { display: 'o', input: 'o' }, { display: 'g', input: 'g' },
+            { display: 'c', input: 'c' }, { display: 't', input: 't' },
+          ]),
+          lvl('eng-5b-ch5-l2', '动物词汇', 'basic', 2, 'word', [
+            { display: 'mine', input: 'mine' }, { display: 'yours', input: 'yours' },
+            { display: 'his', input: 'his' }, { display: 'hers', input: 'hers' },
+            { display: 'climbing', input: 'climbing' }, { display: 'eating', input: 'eating' },
+            { display: 'playing', input: 'playing' }, { display: 'sleeping', input: 'sleeping' },
+          ]),
+          lvl('eng-5b-ch5-l3', '所有格句子', 'advanced', 3, 'sentence', [
+            { display: 'Whose book is this?', input: 'Whose book is this?' },
+            { display: 'It is mine.', input: 'It is mine.' },
+            { display: 'The cat is hers.', input: 'The cat is hers.' },
+            { display: 'The dog is playing.', input: 'The dog is playing.' },
+          ]),
+          lvl('eng-5b-ch5-l4', '宠物对话', 'boss', 4, 'paragraph', [
+            { display: 'Whose dog is that?', input: 'Whose dog is that?' },
+            { display: 'It is Zhang Peng\'s.', input: "It is Zhang Peng's." },
+            { display: 'What is the dog doing?', input: 'What is the dog doing?' },
+            { display: 'It is playing with a ball.', input: 'It is playing with a ball.' },
+            { display: 'It is so cute!', input: 'It is so cute!' },
+          ]),
+        ],
+      },
+      {
+        id: 'eng-5b-ch6', title: 'Work Quietly!', subtitle: 'Unit 6 安静地工作', order: 6, icon: '📚',
+        levels: [
+          lvl('eng-5b-ch6-l1', '规则字母', 'warmup', 1, 'char', [
+            { display: 'q', input: 'q' }, { display: 'u', input: 'u' }, { display: 'i', input: 'i' },
+            { display: 'e', input: 'e' }, { display: 't', input: 't' },
+          ]),
+          lvl('eng-5b-ch6-l2', '规则词汇', 'basic', 2, 'word', [
+            { display: 'doing morning exercises', input: 'doing morning exercises' },
+            { display: 'having class', input: 'having class' },
+            { display: 'eating lunch', input: 'eating lunch' },
+            { display: 'reading a book', input: 'reading a book' },
+            { display: 'listening to music', input: 'listening to music' },
+            { display: 'keep to the right', input: 'keep to the right' },
+          ]),
+          lvl('eng-5b-ch6-l3', '规则句子', 'advanced', 3, 'sentence', [
+            { display: 'What are they doing?', input: 'What are they doing?' },
+            { display: 'They are eating lunch.', input: 'They are eating lunch.' },
+            { display: 'Talk quietly.', input: 'Talk quietly.' },
+            { display: 'Keep your desk clean.', input: 'Keep your desk clean.' },
+          ]),
+          lvl('eng-5b-ch6-l4', '课堂规则', 'boss', 4, 'paragraph', [
+            { display: 'What are the students doing?', input: 'What are the students doing?' },
+            { display: 'They are having an English class.', input: 'They are having an English class.' },
+            { display: 'Talk quietly, please.', input: 'Talk quietly, please.' },
+            { display: 'Keep your desk clean.', input: 'Keep your desk clean.' },
+            { display: 'Take turns when you talk.', input: 'Take turns when you talk.' },
+          ]),
+        ],
+      },
     ],
   },
-
-  // ==================== ENGLISH GRADE 6 ====================
   {
     id: 'eng-6a', title: '六年级上册', subtitle: 'PEP 六年级上', subject: 'english', grade: 6, semester: 'a',
     chapters: [
@@ -436,6 +884,124 @@ const TEXTBOOKS: Textbook[] = [
             { display: 'Sometimes I come by bus.', input: 'Sometimes I come by bus.' },
             { display: 'My home is near the school.', input: 'My home is near the school.' },
             { display: 'That is good exercise.', input: 'That is good exercise.' },
+          ]),
+        ],
+      },
+      {
+        id: 'eng-6a-ch3', title: 'My Weekend Plan', subtitle: 'Unit 3 我的周末计划', order: 3, icon: '📋',
+        levels: [
+          lvl('eng-6a-ch3-l1', '计划字母', 'warmup', 1, 'char', [
+            { display: 'p', input: 'p' }, { display: 'l', input: 'l' }, { display: 'a', input: 'a' },
+            { display: 'n', input: 'n' }, { display: 'w', input: 'w' },
+          ]),
+          lvl('eng-6a-ch3-l2', '计划词汇', 'basic', 2, 'word', [
+            { display: 'visit grandparents', input: 'visit grandparents' },
+            { display: 'see a film', input: 'see a film' },
+            { display: 'take a trip', input: 'take a trip' },
+            { display: 'go to the supermarket', input: 'go to the supermarket' },
+            { display: 'this morning', input: 'this morning' }, { display: 'tonight', input: 'tonight' },
+            { display: 'tomorrow', input: 'tomorrow' }, { display: 'dictionary', input: 'dictionary' },
+          ]),
+          lvl('eng-6a-ch3-l3', '计划句子', 'advanced', 3, 'sentence', [
+            { display: 'What are you going to do?', input: 'What are you going to do?' },
+            { display: 'I am going to see a film.', input: 'I am going to see a film.' },
+            { display: 'When are you going?', input: 'When are you going?' },
+            { display: 'This afternoon.', input: 'This afternoon.' },
+          ]),
+          lvl('eng-6a-ch3-l4', '周末计划', 'boss', 4, 'paragraph', [
+            { display: 'What are you going to do this weekend?', input: 'What are you going to do this weekend?' },
+            { display: 'I am going to visit my grandparents.', input: 'I am going to visit my grandparents.' },
+            { display: 'I am going to see a film on Saturday.', input: 'I am going to see a film on Saturday.' },
+            { display: 'I am going to take a trip on Sunday.', input: 'I am going to take a trip on Sunday.' },
+            { display: 'Sounds like a great weekend!', input: 'Sounds like a great weekend!' },
+          ]),
+        ],
+      },
+      {
+        id: 'eng-6a-ch4', title: 'I Have a Pen Pal', subtitle: 'Unit 4 我有一个笔友', order: 4, icon: '✉️',
+        levels: [
+          lvl('eng-6a-ch4-l1', '爱好字母', 'warmup', 1, 'char', [
+            { display: 'h', input: 'h' }, { display: 'o', input: 'o' }, { display: 'b', input: 'b' },
+            { display: 'y', input: 'y' }, { display: 's', input: 's' },
+          ]),
+          lvl('eng-6a-ch4-l2', '爱好词汇', 'basic', 2, 'word', [
+            { display: 'singing', input: 'singing' }, { display: 'dancing', input: 'dancing' },
+            { display: 'reading stories', input: 'reading stories' },
+            { display: 'playing football', input: 'playing football' },
+            { display: 'doing kung fu', input: 'doing kung fu' },
+            { display: 'drawing cartoons', input: 'drawing cartoons' },
+            { display: 'cooks Chinese food', input: 'cooks Chinese food' },
+            { display: 'studies Chinese', input: 'studies Chinese' },
+          ]),
+          lvl('eng-6a-ch4-l3', '爱好句子', 'advanced', 3, 'sentence', [
+            { display: 'What are your hobbies?', input: 'What are your hobbies?' },
+            { display: 'I like singing and dancing.', input: 'I like singing and dancing.' },
+            { display: 'Does he like reading stories?', input: 'Does he like reading stories?' },
+            { display: 'Yes, he does.', input: 'Yes, he does.' },
+          ]),
+          lvl('eng-6a-ch4-l4', '笔友对话', 'boss', 4, 'paragraph', [
+            { display: 'I have a new pen pal.', input: 'I have a new pen pal.' },
+            { display: 'What are his hobbies?', input: 'What are his hobbies?' },
+            { display: 'He likes playing football and doing kung fu.', input: 'He likes playing football and doing kung fu.' },
+            { display: 'Does he live in Beijing?', input: 'Does he live in Beijing?' },
+            { display: 'Yes, he does.', input: 'Yes, he does.' },
+          ]),
+        ],
+      },
+      {
+        id: 'eng-6a-ch5', title: 'What Does He Do?', subtitle: 'Unit 5 他是做什么的', order: 5, icon: '👨‍⚕️',
+        levels: [
+          lvl('eng-6a-ch5-l1', '职业字母', 'warmup', 1, 'char', [
+            { display: 'w', input: 'w' }, { display: 'o', input: 'o' }, { display: 'r', input: 'r' },
+            { display: 'k', input: 'k' }, { display: 'e', input: 'e' },
+          ]),
+          lvl('eng-6a-ch5-l2', '职业词汇', 'basic', 2, 'word', [
+            { display: 'factory worker', input: 'factory worker' },
+            { display: 'postman', input: 'postman' }, { display: 'businessman', input: 'businessman' },
+            { display: 'police officer', input: 'police officer' },
+            { display: 'fisherman', input: 'fisherman' }, { display: 'scientist', input: 'scientist' },
+            { display: 'pilot', input: 'pilot' }, { display: 'coach', input: 'coach' },
+          ]),
+          lvl('eng-6a-ch5-l3', '职业句子', 'advanced', 3, 'sentence', [
+            { display: 'What does your father do?', input: 'What does your father do?' },
+            { display: 'He is a police officer.', input: 'He is a police officer.' },
+            { display: 'Where does he work?', input: 'Where does he work?' },
+            { display: 'He works in a hospital.', input: 'He works in a hospital.' },
+          ]),
+          lvl('eng-6a-ch5-l4', '职业对话', 'boss', 4, 'paragraph', [
+            { display: 'What does your mother do?', input: 'What does your mother do?' },
+            { display: 'She is a scientist.', input: 'She is a scientist.' },
+            { display: 'Where does she work?', input: 'Where does she work?' },
+            { display: 'She works in a university.', input: 'She works in a university.' },
+            { display: 'I want to be a scientist too.', input: 'I want to be a scientist too.' },
+          ]),
+        ],
+      },
+      {
+        id: 'eng-6a-ch6', title: 'How Do You Feel?', subtitle: 'Unit 6 你感觉怎么样', order: 6, icon: '😊',
+        levels: [
+          lvl('eng-6a-ch6-l1', '情感字母', 'warmup', 1, 'char', [
+            { display: 'h', input: 'h' }, { display: 'a', input: 'a' }, { display: 'p', input: 'p' },
+            { display: 'y', input: 'y' }, { display: 's', input: 's' },
+          ]),
+          lvl('eng-6a-ch6-l2', '情感词汇', 'basic', 2, 'word', [
+            { display: 'angry', input: 'angry' }, { display: 'afraid', input: 'afraid' },
+            { display: 'sad', input: 'sad' }, { display: 'worried', input: 'worried' },
+            { display: 'happy', input: 'happy' }, { display: 'ill', input: 'ill' },
+            { display: 'see a doctor', input: 'see a doctor' }, { display: 'take a deep breath', input: 'take a deep breath' },
+          ]),
+          lvl('eng-6a-ch6-l3', '情感句子', 'advanced', 3, 'sentence', [
+            { display: 'How do you feel?', input: 'How do you feel?' },
+            { display: 'I am happy today.', input: 'I am happy today.' },
+            { display: 'What is wrong?', input: 'What is wrong?' },
+            { display: 'I am worried about my test.', input: 'I am worried about my test.' },
+          ]),
+          lvl('eng-6a-ch6-l4', '情感对话', 'boss', 4, 'paragraph', [
+            { display: 'You look sad. What is wrong?', input: 'You look sad. What is wrong?' },
+            { display: 'I lost my pencil box.', input: 'I lost my pencil box.' },
+            { display: 'Do not worry. Let me help you.', input: 'Do not worry. Let me help you.' },
+            { display: 'Thank you. I feel better now.', input: 'Thank you. I feel better now.' },
+            { display: 'You are welcome.', input: 'You are welcome.' },
           ]),
         ],
       },
@@ -501,6 +1067,63 @@ const TEXTBOOKS: Textbook[] = [
             { display: 'I watched TV and cooked dinner.', input: 'I watched TV and cooked dinner.' },
             { display: 'Did you go anywhere?', input: 'Did you go anywhere?' },
             { display: 'No, I stayed at home.', input: 'No, I stayed at home.' },
+          ]),
+        ],
+      },
+      {
+        id: 'eng-6b-ch3', title: 'Where Did You Go?', subtitle: 'Unit 3 你去了哪里', order: 3, icon: '✈️',
+        levels: [
+          lvl('eng-6b-ch3-l1', '旅行字母', 'warmup', 1, 'char', [
+            { display: 't', input: 't' }, { display: 'r', input: 'r' }, { display: 'a', input: 'a' },
+            { display: 'v', input: 'v' }, { display: 'l', input: 'l' },
+          ]),
+          lvl('eng-6b-ch3-l2', '旅行词汇', 'basic', 2, 'word', [
+            { display: 'went camping', input: 'went camping' }, { display: 'went fishing', input: 'went fishing' },
+            { display: 'rode a horse', input: 'rode a horse' }, { display: 'rode a bike', input: 'rode a bike' },
+            { display: 'hurt my foot', input: 'hurt my foot' }, { display: 'took pictures', input: 'took pictures' },
+            { display: 'bought gifts', input: 'bought gifts' }, { display: 'fell off', input: 'fell off' },
+          ]),
+          lvl('eng-6b-ch3-l3', '旅行句子', 'advanced', 3, 'sentence', [
+            { display: 'Where did you go over the holiday?', input: 'Where did you go over the holiday?' },
+            { display: 'I went to Sanya.', input: 'I went to Sanya.' },
+            { display: 'What did you do?', input: 'What did you do?' },
+            { display: 'I took pictures and bought gifts.', input: 'I took pictures and bought gifts.' },
+          ]),
+          lvl('eng-6b-ch3-l4', '假期旅行', 'boss', 4, 'paragraph', [
+            { display: 'How was your holiday?', input: 'How was your holiday?' },
+            { display: 'It was great! I went to Xinjiang.', input: 'It was great! I went to Xinjiang.' },
+            { display: 'I rode a horse and went camping.', input: 'I rode a horse and went camping.' },
+            { display: 'I took many pictures.', input: 'I took many pictures.' },
+            { display: 'That sounds wonderful!', input: 'That sounds wonderful!' },
+          ]),
+        ],
+      },
+      {
+        id: 'eng-6b-ch4', title: 'Then and Now', subtitle: 'Unit 4 过去和现在', order: 4, icon: '⏳',
+        levels: [
+          lvl('eng-6b-ch4-l1', '变化字母', 'warmup', 1, 'char', [
+            { display: 't', input: 't' }, { display: 'h', input: 'h' }, { display: 'e', input: 'e' },
+            { display: 'n', input: 'n' }, { display: 'n', input: 'n' },
+          ]),
+          lvl('eng-6b-ch4-l2', '过去式词汇', 'basic', 2, 'word', [
+            { display: 'dining hall', input: 'dining hall' }, { display: 'gym', input: 'gym' },
+            { display: 'grass', input: 'grass' }, { display: 'ago', input: 'ago' },
+            { display: 'cycling', input: 'cycling' }, { display: 'ice-skate', input: 'ice-skate' },
+            { display: 'badminton', input: 'badminton' }, { display: 'star', input: 'star' },
+          ]),
+          lvl('eng-6b-ch4-l3', '变化句子', 'advanced', 3, 'sentence', [
+            { display: 'There was no gym in my school before.', input: 'There was no gym in my school before.' },
+            { display: 'Now we have a new gym.', input: 'Now we have a new gym.' },
+            { display: 'I could not ride a bike before.', input: 'I could not ride a bike before.' },
+            { display: 'Now I can ride very well.', input: 'Now I can ride very well.' },
+          ]),
+          lvl('eng-6b-ch4-l4', '成长变化', 'boss', 4, 'paragraph', [
+            { display: 'I am taller now.', input: 'I am taller now.' },
+            { display: 'Before I could not swim.', input: 'Before I could not swim.' },
+            { display: 'Now I can swim very fast.', input: 'Now I can swim very fast.' },
+            { display: 'Our school is different too.', input: 'Our school is different too.' },
+            { display: 'We have a library and a gym now.', input: 'We have a library and a gym now.' },
+            { display: 'I love our school!', input: 'I love our school!' },
           ]),
         ],
       },
@@ -657,6 +1280,51 @@ const TEXTBOOKS: Textbook[] = [
           ]),
         ],
       },
+      {
+        id: 'chn-4a-ch3', title: '鹿柴', subtitle: '古诗词·王维', order: 3, icon: '🦌',
+        levels: [
+          lvl('chn-4a-ch3-l1', '拼音练习', 'warmup', 1, 'word', [
+            { display: 'lu zhai', input: 'lu zhai' }, { display: 'kong shan', input: 'kong shan' },
+            { display: 'yu xiang', input: 'yu xiang' }, { display: 'fan jing', input: 'fan jing' },
+          ], 'zh-pinyin'),
+          lvl('chn-4a-ch3-l2', '诗句默写', 'basic', 2, 'sentence', [
+            { display: '空山不见人', input: '空山不见人' },
+            { display: '但闻人语响', input: '但闻人语响' },
+            { display: '返景入深林', input: '返景入深林' },
+            { display: '复照青苔上', input: '复照青苔上' },
+          ], 'zh-hanzi'),
+          lvl('chn-4a-ch3-l3', '全诗默写', 'boss', 3, 'paragraph', [
+            { display: '鹿柴', input: '鹿柴', hint: '题目' },
+            { display: '唐 王维', input: '唐 王维', hint: '作者' },
+            { display: '空山不见人', input: '空山不见人' },
+            { display: '但闻人语响', input: '但闻人语响' },
+            { display: '返景入深林', input: '返景入深林' },
+            { display: '复照青苔上', input: '复照青苔上' },
+          ], 'zh-hanzi'),
+        ],
+      },
+      {
+        id: 'chn-4a-ch4', title: '蟋蟀的住宅', subtitle: '课文精读·法布尔', order: 4, icon: '🦗',
+        levels: [
+          lvl('chn-4a-ch4-l1', '生字练习', 'warmup', 1, 'char', [
+            { display: '宅', input: '宅' }, { display: '临', input: '临' },
+            { display: '慎', input: '慎' }, { display: '址', input: '址' },
+            { display: '穴', input: '穴' }, { display: '掘', input: '掘' },
+          ]),
+          lvl('chn-4a-ch4-l2', '词语默写', 'basic', 2, 'word', [
+            { display: '住宅', input: '住宅' }, { display: '临时', input: '临时' },
+            { display: '慎重', input: '慎重' }, { display: '地址', input: '地址' },
+            { display: '洞穴', input: '洞穴' }, { display: '挖掘', input: '挖掘' },
+            { display: '搜索', input: '搜索' }, { display: '粗糙', input: '粗糙' },
+          ]),
+          lvl('chn-4a-ch4-l3', '课文默写', 'advanced', 3, 'paragraph', [
+            { display: '蟋蟀的住宅在草地上', input: '蟋蟀的住宅在草地上' },
+            { display: '它的出口有一丛草挡着', input: '它的出口有一丛草挡着' },
+            { display: '那就是蟋蟀的门', input: '那就是蟋蟀的门' },
+            { display: '住宅内部很光滑很平整', input: '住宅内部很光滑很平整' },
+          ]),
+        ],
+      },
     ],
   },
   {
@@ -703,6 +1371,56 @@ const TEXTBOOKS: Textbook[] = [
             { display: '五彩缤纷的花朵', input: '五彩缤纷的花朵' },
             { display: '争奇斗艳的春天', input: '争奇斗艳的春天' },
           ]),
+        ],
+      },
+      {
+        id: 'chn-4b-ch3', title: '宿新市徐公店', subtitle: '古诗词·杨万里', order: 3, icon: '🏡',
+        levels: [
+          lvl('chn-4b-ch3-l1', '拼音练习', 'warmup', 1, 'word', [
+            { display: 'shu xin shi', input: 'shu xin shi' }, { display: 'li shu', input: 'li shu' },
+            { display: 'hua luo', input: 'hua luo' }, { display: 'huang die', input: 'huang die' },
+          ], 'zh-pinyin'),
+          lvl('chn-4b-ch3-l2', '诗句默写', 'basic', 2, 'sentence', [
+            { display: '篱落疏疏一径深', input: '篱落疏疏一径深' },
+            { display: '树头新绿未成阴', input: '树头新绿未成阴' },
+            { display: '儿童急走追黄蝶', input: '儿童急走追黄蝶' },
+            { display: '飞入菜花无处寻', input: '飞入菜花无处寻' },
+          ], 'zh-hanzi'),
+          lvl('chn-4b-ch3-l3', '全诗默写', 'boss', 3, 'paragraph', [
+            { display: '宿新市徐公店', input: '宿新市徐公店', hint: '题目' },
+            { display: '宋 杨万里', input: '宋 杨万里', hint: '作者' },
+            { display: '篱落疏疏一径深', input: '篱落疏疏一径深' },
+            { display: '树头新绿未成阴', input: '树头新绿未成阴' },
+            { display: '儿童急走追黄蝶', input: '儿童急走追黄蝶' },
+            { display: '飞入菜花无处寻', input: '飞入菜花无处寻' },
+          ], 'zh-hanzi'),
+        ],
+      },
+      {
+        id: 'chn-4b-ch4', title: '清平乐·村居', subtitle: '古诗词·辛弃疾', order: 4, icon: '🏡',
+        levels: [
+          lvl('chn-4b-ch4-l1', '拼音练习', 'warmup', 1, 'word', [
+            { display: 'wu yan', input: 'wu yan' }, { display: 'lao weng', input: 'lao weng' },
+            { display: 'lian peng', input: 'lian peng' },
+          ], 'zh-pinyin'),
+          lvl('chn-4b-ch4-l2', '词句默写', 'basic', 2, 'sentence', [
+            { display: '茅檐低小', input: '茅檐低小' },
+            { display: '溪上青青草', input: '溪上青青草' },
+            { display: '醉里吴音相媚好', input: '醉里吴音相媚好' },
+            { display: '白发谁家翁媪', input: '白发谁家翁媪' },
+            { display: '大儿锄豆溪东', input: '大儿锄豆溪东' },
+            { display: '中儿正织鸡笼', input: '中儿正织鸡笼' },
+          ], 'zh-hanzi'),
+          lvl('chn-4b-ch4-l3', '全词默写', 'boss', 3, 'paragraph', [
+            { display: '清平乐·村居', input: '清平乐 村居', hint: '题目' },
+            { display: '宋 辛弃疾', input: '宋 辛弃疾', hint: '作者' },
+            { display: '茅檐低小', input: '茅檐低小' },
+            { display: '溪上青青草', input: '溪上青青草' },
+            { display: '醉里吴音相媚好', input: '醉里吴音相媚好' },
+            { display: '白发谁家翁媪', input: '白发谁家翁媪' },
+            { display: '最喜小儿亡赖', input: '最喜小儿亡赖' },
+            { display: '溪头卧剥莲蓬', input: '溪头卧剥莲蓬' },
+          ], 'zh-hanzi'),
         ],
       },
     ],
@@ -756,6 +1474,50 @@ const TEXTBOOKS: Textbook[] = [
           ]),
         ],
       },
+      {
+        id: 'chn-5a-ch3', title: '题临安邸', subtitle: '古诗词·林升', order: 3, icon: '🏯',
+        levels: [
+          lvl('chn-5a-ch3-l1', '拼音练习', 'warmup', 1, 'word', [
+            { display: 'shan wai', input: 'shan wai' }, { display: 'lou wai lou', input: 'lou wai lou' },
+            { display: 'xun hang', input: 'xun hang' }, { display: 'zui zhou', input: 'zui zhou' },
+          ], 'zh-pinyin'),
+          lvl('chn-5a-ch3-l2', '诗句默写', 'basic', 2, 'sentence', [
+            { display: '山外青山楼外楼', input: '山外青山楼外楼' },
+            { display: '西湖歌舞几时休', input: '西湖歌舞几时休' },
+            { display: '暖风熏得游人醉', input: '暖风熏得游人醉' },
+            { display: '直把杭州作汴州', input: '直把杭州作汴州' },
+          ], 'zh-hanzi'),
+          lvl('chn-5a-ch3-l3', '全诗默写', 'boss', 3, 'paragraph', [
+            { display: '题临安邸', input: '题临安邸', hint: '题目' },
+            { display: '宋 林升', input: '宋 林升', hint: '作者' },
+            { display: '山外青山楼外楼', input: '山外青山楼外楼' },
+            { display: '西湖歌舞几时休', input: '西湖歌舞几时休' },
+            { display: '暖风熏得游人醉', input: '暖风熏得游人醉' },
+            { display: '直把杭州作汴州', input: '直把杭州作汴州' },
+          ], 'zh-hanzi'),
+        ],
+      },
+      {
+        id: 'chn-5a-ch4', title: '桂花雨', subtitle: '课文精读·琦君', order: 4, icon: '🌸',
+        levels: [
+          lvl('chn-5a-ch4-l1', '生字练习', 'warmup', 1, 'char', [
+            { display: '桂', input: '桂' }, { display: '箩', input: '箩' },
+            { display: '杭', input: '杭' }, { display: '懂', input: '懂' },
+            { display: '糕', input: '糕' },
+          ]),
+          lvl('chn-5a-ch4-l2', '词语默写', 'basic', 2, 'word', [
+            { display: '桂花', input: '桂花' }, { display: '箩筐', input: '箩筐' },
+            { display: '杭州', input: '杭州' }, { display: '懂得', input: '懂得' },
+            { display: '糕饼', input: '糕饼' }, { display: '浸在', input: '浸在' },
+          ]),
+          lvl('chn-5a-ch4-l3', '课文默写', 'advanced', 3, 'paragraph', [
+            { display: '桂花盛开的时候', input: '桂花盛开的时候' },
+            { display: '不说飘香十里', input: '不说飘香十里' },
+            { display: '至少前后左右十几家邻居', input: '至少前后左右十几家邻居' },
+            { display: '没有不浸在桂花香里的', input: '没有不浸在桂花香里的' },
+          ]),
+        ],
+      },
     ],
   },
   {
@@ -803,6 +1565,52 @@ const TEXTBOOKS: Textbook[] = [
             { display: '有一天周瑜请诸葛亮商议军事', input: '有一天周瑜请诸葛亮商议军事' },
             { display: '说我们就要跟曹军交战', input: '说我们就要跟曹军交战' },
           ]),
+        ],
+      },
+      {
+        id: 'chn-5b-ch3', title: '稚子弄冰', subtitle: '古诗词·杨万里', order: 3, icon: '🧊',
+        levels: [
+          lvl('chn-5b-ch3-l1', '拼音练习', 'warmup', 1, 'word', [
+            { display: 'zhi zi', input: 'zhi zi' }, { display: 'jin pen', input: 'jin pen' },
+            { display: 'qiang sheng', input: 'qiang sheng' }, { display: 'sui lu', input: 'sui lu' },
+          ], 'zh-pinyin'),
+          lvl('chn-5b-ch3-l2', '诗句默写', 'basic', 2, 'sentence', [
+            { display: '稚子金盆脱晓冰', input: '稚子金盆脱晓冰' },
+            { display: '彩丝穿取当银钲', input: '彩丝穿取当银钲' },
+            { display: '敲成玉磬穿林响', input: '敲成玉磬穿林响' },
+            { display: '忽作玻璃碎地声', input: '忽作玻璃碎地声' },
+          ], 'zh-hanzi'),
+          lvl('chn-5b-ch3-l3', '全诗默写', 'boss', 3, 'paragraph', [
+            { display: '稚子弄冰', input: '稚子弄冰', hint: '题目' },
+            { display: '宋 杨万里', input: '宋 杨万里', hint: '作者' },
+            { display: '稚子金盆脱晓冰', input: '稚子金盆脱晓冰' },
+            { display: '彩丝穿取当银钲', input: '彩丝穿取当银钲' },
+            { display: '敲成玉磬穿林响', input: '敲成玉磬穿林响' },
+            { display: '忽作玻璃碎地声', input: '忽作玻璃碎地声' },
+          ], 'zh-hanzi'),
+        ],
+      },
+      {
+        id: 'chn-5b-ch4', title: '村晚', subtitle: '古诗词·雷震', order: 4, icon: '🌅',
+        levels: [
+          lvl('chn-5b-ch4-l1', '拼音练习', 'warmup', 1, 'word', [
+            { display: 'cao man', input: 'cao man' }, { display: 'chi yao', input: 'chi yao' },
+            { display: 'heng po', input: 'heng po' }, { display: 'yi qu', input: 'yi qu' },
+          ], 'zh-pinyin'),
+          lvl('chn-5b-ch4-l2', '诗句默写', 'basic', 2, 'sentence', [
+            { display: '草满池塘水满陂', input: '草满池塘水满陂' },
+            { display: '山衔落日浸寒漪', input: '山衔落日浸寒漪' },
+            { display: '牧童归去横牛背', input: '牧童归去横牛背' },
+            { display: '短笛无腔信口吹', input: '短笛无腔信口吹' },
+          ], 'zh-hanzi'),
+          lvl('chn-5b-ch4-l3', '全诗默写', 'boss', 3, 'paragraph', [
+            { display: '村晚', input: '村晚', hint: '题目' },
+            { display: '宋 雷震', input: '宋 雷震', hint: '作者' },
+            { display: '草满池塘水满陂', input: '草满池塘水满陂' },
+            { display: '山衔落日浸寒漪', input: '山衔落日浸寒漪' },
+            { display: '牧童归去横牛背', input: '牧童归去横牛背' },
+            { display: '短笛无腔信口吹', input: '短笛无腔信口吹' },
+          ], 'zh-hanzi'),
         ],
       },
     ],
@@ -861,6 +1669,50 @@ const TEXTBOOKS: Textbook[] = [
           ]),
         ],
       },
+      {
+        id: 'chn-6a-ch3', title: '春日', subtitle: '古诗词·朱熹', order: 3, icon: '🌸',
+        levels: [
+          lvl('chn-6a-ch3-l1', '拼音练习', 'warmup', 1, 'word', [
+            { display: 'sheng ri', input: 'sheng ri' }, { display: 'xun fang', input: 'xun fang' },
+            { display: 'si shui', input: 'si shui' }, { display: 'wu bian', input: 'wu bian' },
+          ], 'zh-pinyin'),
+          lvl('chn-6a-ch3-l2', '诗句默写', 'basic', 2, 'sentence', [
+            { display: '胜日寻芳泗水滨', input: '胜日寻芳泗水滨' },
+            { display: '无边光景一时新', input: '无边光景一时新' },
+            { display: '等闲识得东风面', input: '等闲识得东风面' },
+            { display: '万紫千红总是春', input: '万紫千红总是春' },
+          ], 'zh-hanzi'),
+          lvl('chn-6a-ch3-l3', '全诗默写', 'boss', 3, 'paragraph', [
+            { display: '春日', input: '春日', hint: '题目' },
+            { display: '宋 朱熹', input: '宋 朱熹', hint: '作者' },
+            { display: '胜日寻芳泗水滨', input: '胜日寻芳泗水滨' },
+            { display: '无边光景一时新', input: '无边光景一时新' },
+            { display: '等闲识得东风面', input: '等闲识得东风面' },
+            { display: '万紫千红总是春', input: '万紫千红总是春' },
+          ], 'zh-hanzi'),
+        ],
+      },
+      {
+        id: 'chn-6a-ch4', title: '开国大典', subtitle: '课文精读', order: 4, icon: '🇨🇳',
+        levels: [
+          lvl('chn-6a-ch4-l1', '生字练习', 'warmup', 1, 'char', [
+            { display: '盏', input: '盏' }, { display: '栏', input: '栏' },
+            { display: '汇', input: '汇' }, { display: '爆', input: '爆' },
+            { display: '宣', input: '宣' }, { display: '帜', input: '帜' },
+          ]),
+          lvl('chn-6a-ch4-l2', '词语默写', 'basic', 2, 'word', [
+            { display: '灯盏', input: '灯盏' }, { display: '栏杆', input: '栏杆' },
+            { display: '汇集', input: '汇集' }, { display: '爆发', input: '爆发' },
+            { display: '宣布', input: '宣布' }, { display: '旗帜', input: '旗帜' },
+            { display: '瞻仰', input: '瞻仰' }, { display: '肃立', input: '肃立' },
+          ]),
+          lvl('chn-6a-ch4-l3', '课文默写', 'advanced', 3, 'paragraph', [
+            { display: '1949年10月1日', input: '1949年10月1日' },
+            { display: '开国大典在北京天安门广场隆重举行', input: '开国大典在北京天安门广场隆重举行' },
+            { display: '毛主席宣布中华人民共和国成立', input: '毛主席宣布中华人民共和国成立' },
+          ]),
+        ],
+      },
     ],
   },
   {
@@ -908,6 +1760,52 @@ const TEXTBOOKS: Textbook[] = [
             { display: '桃花谢了有再开的时候', input: '桃花谢了有再开的时候' },
             { display: '但是聪明的你告诉我', input: '但是聪明的你告诉我' },
           ]),
+        ],
+      },
+      {
+        id: 'chn-6b-ch3', title: '竹石', subtitle: '古诗词·郑燮', order: 3, icon: '🎋',
+        levels: [
+          lvl('chn-6b-ch3-l1', '拼音练习', 'warmup', 1, 'word', [
+            { display: 'zhu shi', input: 'zhu shi' }, { display: 'li gen', input: 'li gen' },
+            { display: 'po yan', input: 'po yan' }, { display: 'ren jian', input: 'ren jian' },
+          ], 'zh-pinyin'),
+          lvl('chn-6b-ch3-l2', '诗句默写', 'basic', 2, 'sentence', [
+            { display: '咬定青山不放松', input: '咬定青山不放松' },
+            { display: '立根原在破岩中', input: '立根原在破岩中' },
+            { display: '千磨万击还坚劲', input: '千磨万击还坚劲' },
+            { display: '任尔东西南北风', input: '任尔东西南北风' },
+          ], 'zh-hanzi'),
+          lvl('chn-6b-ch3-l3', '全诗默写', 'boss', 3, 'paragraph', [
+            { display: '竹石', input: '竹石', hint: '题目' },
+            { display: '清 郑燮', input: '清 郑燮', hint: '作者' },
+            { display: '咬定青山不放松', input: '咬定青山不放松' },
+            { display: '立根原在破岩中', input: '立根原在破岩中' },
+            { display: '千磨万击还坚劲', input: '千磨万击还坚劲' },
+            { display: '任尔东西南北风', input: '任尔东西南北风' },
+          ], 'zh-hanzi'),
+        ],
+      },
+      {
+        id: 'chn-6b-ch4', title: '马诗', subtitle: '古诗词·李贺', order: 4, icon: '🐴',
+        levels: [
+          lvl('chn-6b-ch4-l1', '拼音练习', 'warmup', 1, 'word', [
+            { display: 'sha ruan', input: 'sha ruan' }, { display: 'yan zhi', input: 'yan zhi' },
+            { display: 'jin luo', input: 'jin luo' }, { display: 'kuai zou', input: 'kuai zou' },
+          ], 'zh-pinyin'),
+          lvl('chn-6b-ch4-l2', '诗句默写', 'basic', 2, 'sentence', [
+            { display: '大漠沙如雪', input: '大漠沙如雪' },
+            { display: '燕山月似钩', input: '燕山月似钩' },
+            { display: '何当金络脑', input: '何当金络脑' },
+            { display: '快走踏清秋', input: '快走踏清秋' },
+          ], 'zh-hanzi'),
+          lvl('chn-6b-ch4-l3', '全诗默写', 'boss', 3, 'paragraph', [
+            { display: '马诗', input: '马诗', hint: '题目' },
+            { display: '唐 李贺', input: '唐 李贺', hint: '作者' },
+            { display: '大漠沙如雪', input: '大漠沙如雪' },
+            { display: '燕山月似钩', input: '燕山月似钩' },
+            { display: '何当金络脑', input: '何当金络脑' },
+            { display: '快走踏清秋', input: '快走踏清秋' },
+          ], 'zh-hanzi'),
         ],
       },
     ],
