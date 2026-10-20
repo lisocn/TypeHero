@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useUserStore } from '../../stores/userStore'
 import Modal from '../../components/Modal'
 import Button from '../../components/Button'
+import KeyboardHint from '../../components/KeyboardHint'
 
 interface ShopItem {
   id: string
@@ -52,6 +53,7 @@ export default function Shop() {
   return (
     <div className="max-w-4xl mx-auto px-4 py-6">
       <h1 className="text-3xl font-bold text-center mb-2 text-[var(--color-accent-gold)]">🛒 金币商店</h1>
+      <KeyboardHint>查看选中的商品；弹窗内确认购买</KeyboardHint>
       <div className="text-center mb-6">
         <span className="text-[var(--color-text-secondary)]">金币余额: </span>
         <span className="text-xl font-bold text-[var(--color-accent-gold)]">{user?.coin ?? 0} 🪙</span>
@@ -61,6 +63,7 @@ export default function Shop() {
         {CATEGORIES.map(c => (
           <button
             key={c}
+            aria-pressed={category === c}
             onClick={() => setCategory(c)}
             className={`px-4 py-2 rounded-lg text-sm font-semibold whitespace-nowrap cursor-pointer transition-all ${
               category === c
@@ -107,6 +110,7 @@ export default function Shop() {
             <p className="text-[var(--color-text-secondary)] mb-4">{selectedItem.description}</p>
             <p className="text-lg font-bold text-[var(--color-accent-gold)] mb-4">{selectedItem.price} 🪙</p>
             <Button
+              data-modal-primary
               onClick={() => handleBuy(selectedItem)}
               disabled={(user?.coin ?? 0) < selectedItem.price}
               className="w-full"

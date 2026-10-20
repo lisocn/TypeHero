@@ -1,8 +1,11 @@
 import { useNavigate } from 'react-router-dom'
 import Button from '../../components/Button'
+import { useEnterAction } from '../../hooks/useEnterAction'
+import KeyboardHint from '../../components/KeyboardHint'
 
 export default function NotFound() {
   const navigate = useNavigate()
+  useEnterAction(() => navigate('/'))
 
   return (
     <div className="min-h-[calc(100vh-56px)] flex flex-col items-center justify-center px-4">
@@ -10,6 +13,7 @@ export default function NotFound() {
       <h1 className="text-4xl font-bold mb-2">404</h1>
       <p className="text-[var(--color-text-secondary)] mb-6">页面不存在</p>
       <Button onClick={() => navigate('/')}>返回首页</Button>
+      <KeyboardHint>返回首页</KeyboardHint>
     </div>
   )
 }

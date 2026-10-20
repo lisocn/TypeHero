@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import { useUserStore } from '../../stores/userStore'
 import { AVATARS } from '../../utils/levelConfig'
 import Button from '../../components/Button'
+import { useEnterAction } from '../../hooks/useEnterAction'
+import KeyboardHint from '../../components/KeyboardHint'
 
 export default function Login() {
   const navigate = useNavigate()
@@ -13,6 +15,7 @@ export default function Login() {
   const [loading, setLoading] = useState(false)
 
   const handleCreate = async () => {
+    if (loading) return
     const trimmed = nickname.trim()
     if (trimmed.length < 2 || trimmed.length > 12) {
       setError('昵称需要2-12个字符')
@@ -26,21 +29,23 @@ export default function Login() {
     try {
       await createUser(trimmed, selectedAvatar as never)
       navigate('/textbook-select')
-    } catch (e: any) {
-      setError(e.message || '注册失败')
+    } catch (e: unknown) {
+      setError(e instanceof Error ? e.message : '注册失败')
     }
     setLoading(false)
   }
+  useEnterAction(() => { void handleCreate() }, !loading)
 
   return (
     <div className="min-h-[calc(100vh-56px)] flex flex-col items-center justify-center px-4">
-      <div className="w-full max-w-md">
+      <form className="w-full max-w-md" onSubmit={e => { e.preventDefault(); void handleCreate() }} onKeyDown={e => { if (e.key === 'Enter' && (e.nativeEvent.isComposing || e.keyCode === 229 || e.repeat)) e.preventDefault() }}>
         <h1 className="text-3xl font-bold text-center mb-8 text-[var(--color-accent-gold)]">创建你的英雄</h1>
 
         <div className="bg-[var(--color-bg-secondary)] rounded-xl p-6 mb-6">
-          <label className="block text-sm text-[var(--color-text-secondary)] mb-2">英雄昵称</label>
+          <label htmlFor="hero-nickname" className="block text-sm text-[var(--color-text-secondary)] mb-2">英雄昵称</label>
           <input
             type="text"
+            id="hero-nickname"
             value={nickname}
             onChange={e => { setNickname(e.target.value); setError('') }}
             placeholder="输入2-12个字符的昵称"
@@ -54,6 +59,8 @@ export default function Login() {
           <div className="grid grid-cols-4 gap-3">
             {AVATARS.map(a => (
               <button
+                type="button"
+                aria-pressed={selectedAvatar === a.id}
                 key={a.id}
                 onClick={() => setSelectedAvatar(a.id)}
                 className={`p-4 rounded-xl text-center transition-all cursor-pointer ${
@@ -69,10 +76,11 @@ export default function Login() {
           </div>
         </div>
 
-        <Button size="lg" className="w-full" onClick={handleCreate} disabled={loading}>
+        <Button type="submit" size="lg" className="w-full" disabled={loading}>
           {loading ? '创建中...' : '⚔️ 创建英雄'}
         </Button>
-      </div>
+        <KeyboardHint>创建英雄</KeyboardHint>
+      </form>
     </div>
   )
 }

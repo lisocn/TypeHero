@@ -4,6 +4,8 @@ import { getTextbooksByGrade } from '../../data/textbooks'
 import type { Grade } from '../../data/types'
 import { api } from '../../utils/api'
 import Button from '../../components/Button'
+import { useEnterAction } from '../../hooks/useEnterAction'
+import KeyboardHint from '../../components/KeyboardHint'
 
 const GRADES: Grade[] = [3, 4, 5, 6]
 const GRADE_LABELS: Record<Grade, string> = { 3: '三年级', 4: '四年级', 5: '五年级', 6: '六年级' }
@@ -57,6 +59,7 @@ export default function TextbookSelect() {
   }
 
   const handleSave = async () => {
+    if (saving || loading) return
     setSaving(true)
     const ids = Array.from(selectedIds)
     saveLocal(ids)
@@ -69,24 +72,29 @@ export default function TextbookSelect() {
       for (const id of currentSet) {
         if (!selectedIds.has(id)) await api.unselectTextbook(id)
       }
-    } catch {}
+    } catch { /* Keep the local selection available when the server is offline. */ }
     setSaving(false)
     navigate('/adventure')
   }
+  useEnterAction(() => { void handleSave() }, !saving && !loading)
 
   const gradeTextbooks = getTextbooksByGrade(selectedGrade)
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-6">
-      <h1 className="text-3xl font-bold text-center mb-2 text-[var(--color-accent-gold)]">📚 选择教材</h1>
-      <p className="text-center text-[var(--color-text-secondary)] mb-6">选择你要练习的教材，随时可以修改</p>
+    <div className="desktop-page textbook-page">
+      <div className="page-heading">
+        <div><p className="page-eyebrow">准备你的冒险</p><h1>📚 选择教材</h1>
+        <p className="page-description">选择你要练习的教材，语文与英语可以一起练习，随时可以修改。</p></div>
+        <span className="page-summary">已选择 <strong>{selectedIds.size}</strong> 本教材</span>
+      </div>
 
-      <div className="flex gap-2 mb-6 justify-center items-center">
+      <div className="textbook-toolbar">
         {GRADES.map(g => {
           const count = getGradeCount(g, selectedIds)
           return (
             <button
               key={g}
+              aria-pressed={selectedGrade === g}
               onClick={() => setSelectedGrade(g)}
               className={`px-5 py-3 rounded-xl text-lg font-bold transition-all cursor-pointer ${
                 selectedGrade === g
@@ -118,30 +126,33 @@ export default function TextbookSelect() {
       {loading ? (
         <div className="text-center py-12 text-[var(--color-text-secondary)]">加载中...</div>
       ) : (
-        <div className="space-y-4">
+        <div className="textbook-grid">
           {gradeTextbooks.map(tb => (
-            <div
+            <button
+              type="button"
+              aria-pressed={selectedIds.has(tb.id)}
               key={tb.id}
               onClick={() => toggleTextbook(tb.id)}
-              className={`bg-[var(--color-bg-secondary)] rounded-xl p-5 cursor-pointer transition-all border-2 ${
+              className={`textbook-card bg-[var(--color-bg-secondary)] rounded-xl cursor-pointer transition-all border-2 ${
                 selectedIds.has(tb.id)
                   ? 'border-[var(--color-accent-green)] bg-green-900/20'
                   : 'border-transparent hover:border-slate-600'
               }`}
             >
-              <div className="flex items-center gap-4">
+              <div className="flex items-start gap-4">
                 <div className={`w-6 h-6 rounded-lg border-2 flex items-center justify-center ${
                   selectedIds.has(tb.id) ? 'bg-[var(--color-accent-green)] border-[var(--color-accent-green)]' : 'border-slate-500'
                 }`}>
                   {selectedIds.has(tb.id) && <span className="text-white text-sm">✓</span>}
                 </div>
-                <div className="flex-1">
-                  <div className="flex items-center gap-2">
+                <div className="flex-1 min-w-0">
+                  <div className="flex flex-wrap items-center gap-2">
                     <span className="text-xl">{tb.subject === 'english' ? '🔤' : '📖'}</span>
-                    <h3 className="text-lg font-bold">{tb.title}</h3>
-                    <span className="text-sm text-[var(--color-text-secondary)]">{tb.subtitle}</span>
+                    <h3 className="text-lg font-bold">{tb.subject === 'english' ? '英语' : '语文'} · {tb.title}</h3>
                   </div>
-                  <div className="flex gap-2 mt-2">
+                  <span className="textbook-edition" data-subject={tb.subject}>教材版本：{tb.subtitle}</span>
+                  <p className="textbook-meta">{tb.chapters.length} 个章节 · {tb.chapters.reduce((sum, ch) => sum + ch.levels.length, 0)} 个关卡</p>
+                  <div className="textbook-chapters">
                     {tb.chapters.map(ch => (
                       <span key={ch.id} className="text-xs bg-slate-700 px-2 py-1 rounded text-[var(--color-text-secondary)]">
                         {ch.icon} {ch.title}
@@ -150,19 +161,23 @@ export default function TextbookSelect() {
                   </div>
                 </div>
               </div>
-            </div>
+            </button>
           ))}
         </div>
       )}
 
-      <div className="flex justify-center mt-8 gap-4">
-        <Button size="lg" onClick={handleSave} disabled={saving}>
+      <div className="textbook-actions">
+        <p className="page-description">可以跨年级选择多本教材，按自己的节奏练习。</p>
+        <div className="flex flex-wrap gap-4">
+        <Button size="lg" onClick={handleSave} disabled={saving || loading}>
           {saving ? '保存中...' : `确认选择 (${selectedIds.size}本教材)`}
         </Button>
         <Button variant="ghost" onClick={() => navigate('/adventure')}>
           跳过
         </Button>
+        </div>
       </div>
+      <KeyboardHint>确认选择的教材</KeyboardHint>
     </div>
   )
 }

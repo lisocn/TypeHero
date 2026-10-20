@@ -1,6 +1,7 @@
 import { useUserStore } from '../../stores/userStore'
 import { getLevelFromExp, AVATARS } from '../../utils/levelConfig'
 import ProgressBar from '../../components/ProgressBar'
+import KeyboardHint from '../../components/KeyboardHint'
 
 export default function Profile() {
   const user = useUserStore(s => s.user)
@@ -42,6 +43,7 @@ export default function Profile() {
 
       <div className="bg-[var(--color-bg-secondary)] rounded-xl p-6">
         <h2 className="text-lg font-bold mb-4">设置</h2>
+        <KeyboardHint>切换选中的设置</KeyboardHint>
         <div className="space-y-3">
           <SettingToggle
             label="音效"
@@ -64,6 +66,9 @@ function SettingToggle({ label, checked, onChange }: { label: string; checked: b
     <div className="flex items-center justify-between">
       <span className="text-[var(--color-text-primary)]">{label}</span>
       <button
+        role="switch"
+        aria-label={label}
+        aria-checked={checked}
         onClick={() => onChange(!checked)}
         className={`w-12 h-6 rounded-full transition-colors cursor-pointer ${checked ? 'bg-[var(--color-accent-green)]' : 'bg-slate-600'}`}
       >

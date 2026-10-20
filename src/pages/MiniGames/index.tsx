@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom'
+import KeyboardHint from '../../components/KeyboardHint'
 
 const MINI_GAMES = [
   { id: 'letter-rain', name: '字母雨', icon: '🌧️', description: '字母从天而降，按下对应键击碎！' },
@@ -14,6 +15,7 @@ export default function MiniGames() {
   return (
     <div className="max-w-4xl mx-auto px-4 py-6">
       <h1 className="text-3xl font-bold text-center mb-8 text-[var(--color-accent-gold)]">🎮 趣味小游戏</h1>
+      <KeyboardHint>打开选中的游戏</KeyboardHint>
 
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
         {MINI_GAMES.map(game => (

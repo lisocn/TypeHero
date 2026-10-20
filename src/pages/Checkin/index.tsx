@@ -1,11 +1,14 @@
 import { useState } from 'react'
 import { useCheckinStore } from '../../stores/checkinStore'
+import { useEnterAction } from '../../hooks/useEnterAction'
+import KeyboardHint from '../../components/KeyboardHint'
+import Button from '../../components/Button'
 
 export default function Checkin() {
   const now = new Date()
   const [year, setYear] = useState(now.getFullYear())
   const [month, setMonth] = useState(now.getMonth())
-  const records = useCheckinStore(s => s.getMonthRecords(year, month))
+  const records = useCheckinStore(s => s.records)
   const currentStreak = useCheckinStore(s => s.currentStreak)
   const totalDays = useCheckinStore(s => s.totalDays)
   const patchCards = useCheckinStore(s => s.monthlyPatchCards)
@@ -14,24 +17,29 @@ export default function Checkin() {
   const daysInMonth = new Date(year, month + 1, 0).getDate()
   const firstDayOfWeek = new Date(year, month, 1).getDay()
 
-  const today = `${year}-${String(month + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`
+  const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`
+  const checkedToday = !!records[today]?.checked
 
   const handleCheckin = (date: string) => {
     checkin(date, { coinEarned: 10, expEarned: 20 })
   }
+  useEnterAction(() => handleCheckin(today), !checkedToday)
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-6">
       <h1 className="text-3xl font-bold text-center mb-6 text-[var(--color-accent-gold)]">📅 每日打卡</h1>
+      <div className="text-center mb-6"><Button disabled={checkedToday} onClick={() => handleCheckin(today)}>{checkedToday ? '✓ 今日已打卡' : '今日打卡'}</Button>{!checkedToday && <KeyboardHint>完成今日打卡</KeyboardHint>}</div>
 
       <div className="bg-[var(--color-bg-secondary)] rounded-xl p-6 mb-6">
         <div className="flex items-center justify-between mb-4">
           <button
+            aria-label="上个月"
             onClick={() => { if (month === 0) { setMonth(11); setYear(y => y - 1) } else setMonth(m => m - 1) }}
             className="text-[var(--color-text-secondary)] hover:text-white cursor-pointer text-xl"
           >◀</button>
           <h2 className="text-xl font-bold">{year}年{month + 1}月</h2>
           <button
+            aria-label="下个月"
             onClick={() => { if (month === 11) { setMonth(0); setYear(y => y + 1) } else setMonth(m => m + 1) }}
             className="text-[var(--color-text-secondary)] hover:text-white cursor-pointer text-xl"
           >▶</button>
@@ -55,8 +63,10 @@ export default function Checkin() {
             const isChecked = record?.checked
 
             return (
-              <div
+              <button
                 key={day}
+                disabled={!isToday || isChecked}
+                aria-label={`${dateStr}${isChecked ? '，已打卡' : isToday ? '，今日打卡' : ''}`}
                 onClick={() => !isChecked && isToday && handleCheckin(dateStr)}
                 className={`h-10 rounded-lg flex items-center justify-center text-sm transition-all ${
                   isChecked
@@ -67,7 +77,7 @@ export default function Checkin() {
                 }`}
               >
                 {isChecked ? '✓' : day}
-              </div>
+              </button>
             )
           })}
         </div>

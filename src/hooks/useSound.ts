@@ -19,7 +19,7 @@ function playTone(freq: number, duration: number, type: OscillatorType = 'sine',
     osc.connect(gain).connect(ctx.destination)
     osc.start()
     osc.stop(ctx.currentTime + duration)
-  } catch {}
+  } catch { /* Sound effects are optional when browser audio is unavailable. */ }
 }
 
 function playNoise(duration: number, volume = 0.15) {
@@ -36,7 +36,7 @@ function playNoise(duration: number, volume = 0.15) {
     gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration)
     src.connect(gain).connect(ctx.destination)
     src.start()
-  } catch {}
+  } catch { /* Sound effects are optional when browser audio is unavailable. */ }
 }
 
 const SOUNDS: Record<string, () => void> = {
@@ -45,10 +45,13 @@ const SOUNDS: Record<string, () => void> = {
   combo10:   () => { playTone(523, 0.1); setTimeout(() => playTone(659, 0.1), 80); setTimeout(() => playTone(784, 0.15), 160) },
   combo30:   () => { playTone(440, 0.08); setTimeout(() => playTone(554, 0.08), 60); setTimeout(() => playTone(659, 0.08), 120); setTimeout(() => playTone(880, 0.2), 180) },
   combo50:   () => { [523,659,784,1047].forEach((f,i) => setTimeout(() => playTone(f, 0.15, 'sine', 0.25), i*80)); playNoise(0.3, 0.08) },
-  victory:   () => { [523,659,784,1047,784,1047].forEach((f,i) => setTimeout(() => playTone(f, 0.2, 'triangle', 0.2), i*120)) },
+  victory:   () => { [523,659,784,1047,784,1047].forEach((f,i) => setTimeout(() => playTone(f, 0.2, 'triangle', 0.12), i*120)) },
   levelup:   () => { [440,554,659,880].forEach((f,i) => setTimeout(() => playTone(f, 0.15), i*100)) },
   achievement: () => { playTone(880, 0.15, 'sine', 0.25); setTimeout(() => playTone(1109, 0.15), 100); setTimeout(() => playTone(1319, 0.3), 200) },
   countdown: () => playTone(440, 0.1, 'square', 0.15),
+  countdown3: () => playTone(523, 0.12, 'triangle', 0.1),
+  countdown2: () => playTone(659, 0.12, 'triangle', 0.1),
+  countdown1: () => playTone(784, 0.14, 'triangle', 0.1),
   start:     () => { playTone(523, 0.1); setTimeout(() => playTone(784, 0.15), 100) },
   pause:     () => playTone(330, 0.2, 'triangle', 0.15),
 }

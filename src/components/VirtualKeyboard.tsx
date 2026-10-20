@@ -14,9 +14,9 @@ export default function VirtualKeyboard({ targetKey, lastKey }: VirtualKeyboardP
   const target = targetKey.toUpperCase()
 
   return (
-    <div className="flex flex-col items-center gap-1 p-2">
+    <div className="virtual-keyboard" aria-label="键盘指引">
       {ROWS.map((row, ri) => (
-        <div key={ri} className="flex gap-1">
+        <div key={ri} className="virtual-key-row">
           {row.map(key => {
             const isTarget = key.toUpperCase() === target
             const isLastCorrect = lastKey?.key.toUpperCase() === key.toUpperCase() && lastKey.correct
@@ -36,7 +36,7 @@ export default function VirtualKeyboard({ targetKey, lastKey }: VirtualKeyboardP
             return (
               <div
                 key={key}
-                className={`w-9 h-9 rounded-md flex items-center justify-center text-sm font-mono font-semibold text-white ${bg} ${ring} transition-colors duration-150`}
+                className={`virtual-key rounded-md flex items-center justify-center font-mono font-semibold text-white ${bg} ${ring} transition-colors duration-150`}
               >
                 {key}
               </div>
@@ -44,7 +44,7 @@ export default function VirtualKeyboard({ targetKey, lastKey }: VirtualKeyboardP
           })}
         </div>
       ))}
-      <div className="w-64 h-9 rounded-md flex items-center justify-center text-sm font-mono font-semibold text-white bg-slate-700">
+      <div className={`virtual-space rounded-md flex items-center justify-center text-sm font-mono font-semibold text-white ${targetKey === ' ' ? 'bg-[var(--color-accent-gold)] ring-2 ring-yellow-300' : 'bg-slate-700'}`}>
         SPACE
       </div>
     </div>

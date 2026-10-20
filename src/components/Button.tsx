@@ -17,9 +17,10 @@ const sizeStyles = {
   lg: 'px-8 py-3 text-lg',
 }
 
-export default function Button({ variant = 'primary', size = 'md', className = '', ...props }: ButtonProps) {
+export default function Button({ variant = 'primary', size = 'md', className = '', type = 'button', ...props }: ButtonProps) {
   return (
     <button
+      type={type}
       className={`font-semibold rounded-lg transition-all duration-200 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer ${variantStyles[variant]} ${sizeStyles[size]} ${className}`}
       {...props}
     />

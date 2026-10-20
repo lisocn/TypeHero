@@ -1,10 +1,14 @@
 import { useState } from 'react'
 import { useUserStore } from '../../stores/userStore'
 import Button from '../../components/Button'
+import { useEnterAction } from '../../hooks/useEnterAction'
+import KeyboardHint from '../../components/KeyboardHint'
 
 export default function ParentDashboard() {
   const [verified, setVerified] = useState(false)
   const [answer, setAnswer] = useState('')
+  const [error, setError] = useState('')
+  const [trendHeights] = useState(() => Array.from({ length: 30 }, () => 20 + Math.random() * 60))
   const user = useUserStore(s => s.user)
 
   const a = 7, b = 3
@@ -13,12 +17,13 @@ export default function ParentDashboard() {
   const handleVerify = () => {
     if (parseInt(answer) === correctAnswer) {
       setVerified(true)
-    }
+    } else setError('答案不正确，请再试一次。')
   }
+  useEnterAction(handleVerify, !verified)
 
   if (!verified) {
     return (
-      <div className="max-w-md mx-auto px-4 py-20 text-center">
+      <form className="max-w-md mx-auto px-4 py-20 text-center" onSubmit={e => { e.preventDefault(); handleVerify() }} onKeyDown={e => { if (e.key === 'Enter' && (e.nativeEvent.isComposing || e.keyCode === 229 || e.repeat)) e.preventDefault() }}>
         <h1 className="text-2xl font-bold mb-6">👨‍👩‍👧 家长验证</h1>
         <p className="text-[var(--color-text-secondary)] mb-4">请回答数学题以进入家长端</p>
         <div className="bg-[var(--color-bg-secondary)] rounded-xl p-6 mb-4">
@@ -26,12 +31,15 @@ export default function ParentDashboard() {
         </div>
         <input
           type="number"
+          aria-label="家长验证答案"
           value={answer}
-          onChange={e => setAnswer(e.target.value)}
+          onChange={e => { setAnswer(e.target.value); setError('') }}
           className="w-full bg-slate-800 border border-slate-600 rounded-lg px-4 py-3 text-white text-center text-xl mb-4 focus:outline-none focus:border-[var(--color-accent-blue)]"
         />
-        <Button onClick={handleVerify} className="w-full">验证进入</Button>
-      </div>
+        {error && <p role="alert" className="text-red-400 mb-4">{error}</p>}
+        <Button type="submit" className="w-full">验证进入</Button>
+        <KeyboardHint>验证进入</KeyboardHint>
+      </form>
     )
   }
 
@@ -66,7 +74,7 @@ export default function ParentDashboard() {
         <h2 className="text-lg font-bold mb-4">📈 成长趋势（近30天）</h2>
         <div className="h-48 flex items-end gap-1 border-b border-slate-600 pb-2">
           {Array.from({ length: 30 }).map((_, i) => {
-            const h = 20 + Math.random() * 60
+            const h = trendHeights[i]
             return (
               <div key={i} className="flex-1 flex flex-col items-center gap-1">
                 <div

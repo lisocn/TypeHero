@@ -1,0 +1,17 @@
+{
+  "appId": "cn.lisocn.typehero",
+  "productName": "TypeHero",
+  "directories": { "output": "release" },
+  "files": ["dist/**/*", "desktop/main.cjs", "desktop/icon.ico", "server/src/**/*", "server/package.json", "package.json"],
+  "asar": true,
+  "electronDist": "node_modules/electron/dist",
+  "asarUnpack": ["**/sql.js/dist/sql-wasm.wasm"],
+  "win": {
+    "target": [{ "target": "portable", "arch": ["x64"] }],
+    "icon": "desktop/icon.ico",
+    "artifactName": "TypeHero-${version}-Windows-x64.exe",
+    "requestedExecutionLevel": "asInvoker"
+  },
+  "portable": { "requestExecutionLevel": "user" },
+  "publish": null
+}

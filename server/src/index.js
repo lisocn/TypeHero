@@ -2,12 +2,12 @@ import express from 'express'
 import cors from 'cors'
 import initSqlJs from 'sql.js'
 import { v4 as uuidv4 } from 'uuid'
-import { fileURLToPath } from 'url'
+import { fileURLToPath, pathToFileURL } from 'url'
 import { dirname, join } from 'path'
-import { readFileSync, writeFileSync, existsSync } from 'fs'
+import { readFileSync, writeFileSync, existsSync, mkdirSync, renameSync } from 'fs'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
-const DB_PATH = join(__dirname, '..', 'data.db')
+let DB_PATH = join(__dirname, '..', 'data.db')
 
 let db
 
@@ -90,7 +90,9 @@ async function initDB() {
 
 function saveDB() {
   const data = db.export()
-  writeFileSync(DB_PATH, Buffer.from(data))
+  const temporaryPath = `${DB_PATH}.tmp`
+  writeFileSync(temporaryPath, Buffer.from(data))
+  renameSync(temporaryPath, DB_PATH)
 }
 
 function dbQuery(sql, params = []) {
@@ -108,7 +110,6 @@ function dbRun(sql, params = []) {
 }
 
 const app = express()
-const PORT = process.env.PORT || 3001
 
 app.use(cors())
 app.use(express.json())
@@ -308,10 +309,33 @@ app.post('/api/exp', authMiddleware, (req, res) => {
   res.json({ level: newLevel, exp: newExp, totalExp: newTotal })
 })
 
-// Graceful shutdown
-process.on('SIGINT', () => { saveDB(); process.exit(0) })
-process.on('SIGTERM', () => { saveDB(); process.exit(0) })
+// The desktop app embeds the same API and supplies a writable per-user database.
+export async function startServer({ port = Number(process.env.PORT) || 3001, host = '127.0.0.1', dbPath = DB_PATH } = {}) {
+  DB_PATH = dbPath
+  mkdirSync(dirname(DB_PATH), { recursive: true })
+  await initDB()
+  const server = await new Promise((resolve, reject) => {
+    const listener = app.listen(port, host, () => resolve(listener))
+    listener.once('error', reject)
+  })
+  return {
+    url: `http://${host}:${server.address().port}`,
+    close: () => new Promise((resolve, reject) => {
+      saveDB()
+      server.close(error => {
+        if (error) reject(error)
+        else { db.close(); db = null; resolve() }
+      })
+      server.closeIdleConnections()
+    }),
+  }
+}
 
-initDB().then(() => {
-  app.listen(PORT, () => console.log(`TypeHero server running on port ${PORT}`))
-})
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  startServer().then(instance => {
+    console.log(`TypeHero server running at ${instance.url}`)
+    for (const signal of ['SIGINT', 'SIGTERM']) {
+      process.on(signal, () => { void instance.close().finally(() => process.exit(0)) })
+    }
+  }).catch(error => { console.error(error); process.exitCode = 1 })
+}

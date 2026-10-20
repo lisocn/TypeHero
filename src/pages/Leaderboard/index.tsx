@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { AVATARS } from '../../utils/levelConfig'
+import KeyboardHint from '../../components/KeyboardHint'
 
 const MOCK_ENTRIES = [
   { rank: 1, nickname: '键盘侠小明', avatar: 'ninja', value: 68, level: 15 },
@@ -41,11 +42,13 @@ export default function Leaderboard() {
   return (
     <div className="max-w-2xl mx-auto px-4 py-6">
       <h1 className="text-3xl font-bold text-center mb-6 text-[var(--color-accent-gold)]">🏅 排行榜</h1>
+      <KeyboardHint>切换选中的榜单</KeyboardHint>
 
       <div className="flex gap-2 mb-6 overflow-x-auto pb-2">
         {TABS.map(tab => (
           <button
             key={tab.id}
+            aria-pressed={activeTab === tab.id}
             onClick={() => setActiveTab(tab.id)}
             className={`px-4 py-2 rounded-lg text-sm font-semibold whitespace-nowrap cursor-pointer transition-all ${
               activeTab === tab.id

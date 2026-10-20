@@ -1,10 +1,13 @@
-import { useState, useEffect, useMemo, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTypingEngine } from '../../hooks/useTypingEngine'
 import { useSound } from '../../hooks/useSound'
 import { useUserStore } from '../../stores/userStore'
 import VirtualKeyboard from '../../components/VirtualKeyboard'
 import Button from '../../components/Button'
+import { useEnterAction } from '../../hooks/useEnterAction'
+import KeyboardHint from '../../components/KeyboardHint'
+import WordLearningHint from '../../components/WordLearningHint'
 
 const SPEED_WORDS = [
   'ruler', 'pencil', 'eraser', 'crayon', 'bag', 'pen', 'book', 'hello',
@@ -13,6 +16,17 @@ const SPEED_WORDS = [
   'good', 'great', 'nice', 'cool', 'fine', 'well', 'like', 'love',
   'cat', 'dog', 'pig', 'cow', 'hen', 'duck', 'bird', 'fish',
 ]
+
+function createSpeedContent() {
+  const words = [...SPEED_WORDS]
+  for (let i = words.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    const word = words[i]
+    words[i] = words[j]
+    words[j] = word
+  }
+  return words.slice(0, 30).join(' ')
+}
 
 export default function SpeedMode() {
   const navigate = useNavigate()
@@ -26,10 +40,7 @@ export default function SpeedMode() {
   const prevComboRef = useRef(0)
   const prevIndexRef = useRef(0)
 
-  const content = useMemo(() => {
-    const shuffled = [...SPEED_WORDS].sort(() => Math.random() - 0.5)
-    return shuffled.slice(0, 30).join(' ')
-  }, [isStarted])
+  const [content, setContent] = useState(createSpeedContent)
 
   const engine = useTypingEngine({
     mode: 'word',
@@ -45,6 +56,20 @@ export default function SpeedMode() {
       addExp(result.exp)
       addCoin(result.coin)
     },
+  })
+  const startChallenge = () => {
+    setContent(createSpeedContent())
+    resetCombo()
+    prevComboRef.current = 0
+    prevIndexRef.current = 0
+    engine.reset()
+    engine.start()
+    setIsStarted(true)
+  }
+  useEnterAction(() => {
+    if (engine.status === 'playing') engine.pause()
+    else if (engine.status === 'paused') engine.resume()
+    else startChallenge()
   })
 
   // Keystroke sounds
@@ -78,7 +103,8 @@ export default function SpeedMode() {
         <div className="text-center py-12">
           <p className="text-[var(--color-text-secondary)] mb-4">60秒内输入尽可能多的单词</p>
           <p className="text-sm text-[var(--color-text-secondary)] mb-6">历史最高: {bestWpm} WPM</p>
-          <Button size="lg" onClick={() => { resetCombo(); prevComboRef.current = 0; prevIndexRef.current = 0; setIsStarted(true); engine.start() }}>🚀 开始挑战</Button>
+          <Button size="lg" onClick={startChallenge}>🚀 开始挑战</Button>
+          <KeyboardHint>开始挑战</KeyboardHint>
         </div>
       )}
 
@@ -89,10 +115,12 @@ export default function SpeedMode() {
             <div className="text-2xl font-bold text-[var(--color-accent-blue)]">⚡ {engine.wpm} WPM</div>
             <div className="text-xl text-[var(--color-accent-green)]">🔥 {engine.combo}</div>
           </div>
+          <KeyboardHint>{engine.status === 'playing' ? '暂停练习' : '继续练习'}</KeyboardHint>
 
           <div className="bg-[var(--color-bg-secondary)] rounded-xl p-6 mb-6">
-            <div className="mono text-2xl text-center leading-relaxed">
-              {content.split('').map((char, i) => {
+            <WordLearningHint text={engine.fullContent} currentIndex={engine.currentIndex} />
+            <div className="mono text-2xl text-center leading-relaxed whitespace-pre-wrap">
+              {engine.fullContent.split('').map((char, i) => {
                 let color = 'text-gray-500'
                 if (i < engine.currentIndex) {
                   const typed = engine.typedChars[i]
@@ -100,7 +128,7 @@ export default function SpeedMode() {
                 } else if (i === engine.currentIndex) {
                   color = 'text-white bg-[var(--color-accent-gold)]/20 border-b-2 border-[var(--color-accent-gold)]'
                 }
-                return <span key={i} className={`${color} transition-colors`}>{char}</span>
+                return <span key={i} className={`${color} transition-colors`}>{char === ' ' && i === engine.currentIndex ? '␣' : char}</span>
               })}
             </div>
           </div>
@@ -134,9 +162,10 @@ export default function SpeedMode() {
             <p className="text-[var(--color-accent-gold)] font-bold mb-4">🏆 新纪录！</p>
           )}
           <div className="flex gap-4 justify-center">
-            <Button onClick={() => { resetCombo(); prevComboRef.current = 0; prevIndexRef.current = 0; engine.reset(); setIsStarted(false) }}>🔄 再来一局</Button>
+            <Button onClick={startChallenge}>🔄 再来一局</Button>
             <Button variant="secondary" onClick={() => navigate('/')}>🏠 返回</Button>
           </div>
+          <KeyboardHint>再来一局</KeyboardHint>
         </div>
       )}
     </div>

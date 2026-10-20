@@ -12,10 +12,17 @@
   --color-text-secondary: #94a3b8;
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+  }
 }
 
 body {
@@ -30,13 +37,14 @@ body {
   min-height: 100vh;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Nunito', sans-serif;
-  font-weight: 700;
-}
-
 .mono {
   font-family: 'JetBrains Mono', monospace;
+}
+
+.keyboard-hint { margin-top: 16px; color: #94a3b8; font-size: 13px; line-height: 1.8; }
+.keyboard-hint kbd { padding: 3px 7px; border: 1px solid #475569; border-radius: 5px; font-family: inherit; font-size: 12px; }
+@layer base {
+  button:focus-visible, a:focus-visible { outline: 3px solid #fbbf24; outline-offset: 4px; }
 }
 
 ::-webkit-scrollbar {

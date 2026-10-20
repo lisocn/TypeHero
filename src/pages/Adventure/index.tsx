@@ -6,6 +6,9 @@ import { TEXTBOOKS } from '../../data/textbooks'
 import type { Textbook } from '../../data/types'
 import StarRating from '../../components/StarRating'
 import { api } from '../../utils/api'
+import { useEnterAction } from '../../hooks/useEnterAction'
+import KeyboardHint from '../../components/KeyboardHint'
+import Button from '../../components/Button'
 
 const LS_KEY = 'typehero_selected_textbooks'
 function loadLocal(): string[] {
@@ -18,6 +21,7 @@ export default function Adventure() {
   const getLevelStars = useGameStore(s => s.getLevelStars)
   const isLevelCompleted = useGameStore(s => s.isLevelCompleted)
   const [selectedIds, setSelectedIds] = useState<string[]>([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     if (!user) { navigate('/login'); return }
@@ -26,27 +30,37 @@ export default function Adventure() {
         setSelectedIds(textbookIds.length > 0 ? textbookIds : loadLocal())
       })
       .catch(() => setSelectedIds(loadLocal()))
+      .finally(() => setLoading(false))
   }, [user, navigate])
 
   const selectedTextbooks: Textbook[] = selectedIds.length > 0
     ? TEXTBOOKS.filter(t => selectedIds.includes(t.id))
     : []
+  const availableLevels = selectedTextbooks.flatMap(tb => tb.chapters.flatMap(ch => ch.levels
+    .filter((_, i) => i === 0 || isLevelCompleted(ch.id, ch.levels[i - 1].id))
+    .map(level => ({ chapterId: ch.id, level }))))
+  const next = availableLevels.find(item => !isLevelCompleted(item.chapterId, item.level.id)) ?? availableLevels[0]
+  const continueAdventure = () => navigate(next ? `/adventure/${next.chapterId}/${next.level.id}` : '/textbook-select')
+  useEnterAction(continueAdventure, !!user && !loading)
 
   if (!user) return null
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-6">
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-3xl font-bold text-[var(--color-accent-gold)]">🌍 世界冒险地图</h1>
+    <div className="desktop-page adventure-page">
+      <div className="page-heading">
+        <div><p className="page-eyebrow">你的学习旅程</p><h1>🌍 世界冒险地图</h1>
+        <p className="page-description">从第一关出发，完成练习，逐步解锁新的挑战。</p></div>
+        <div className="text-right"><Button onClick={continueAdventure} disabled={loading}>{next ? `▶ ${next.level.title}` : '📚 选择教材'}</Button><KeyboardHint>{next ? '开始下一次练习' : '选择教材'}</KeyboardHint>
         <button
           onClick={() => navigate('/textbook-select')}
           className="text-sm text-[var(--color-accent-blue)] hover:text-blue-400 cursor-pointer"
         >
           📚 更换教材
         </button>
+        </div>
       </div>
 
-      {selectedTextbooks.length === 0 ? (
+      {loading ? <p className="py-12 text-center text-slate-400">加载教材中...</p> : selectedTextbooks.length === 0 ? (
         <div className="text-center py-20">
           <p className="text-[var(--color-text-secondary)] mb-4">还没有选择教材</p>
           <button
@@ -58,25 +72,29 @@ export default function Adventure() {
         </div>
       ) : (
         <div className="space-y-8">
+          <nav className="adventure-textbooks" aria-label="已选教材">
+            {selectedTextbooks.map(tb => <a key={tb.id} href={`#textbook-${tb.id}`}>{tb.subject === 'english' ? '🔤 英语' : '📖 语文'} · {tb.title} · {tb.subtitle}</a>)}
+          </nav>
           {selectedTextbooks.map(textbook => (
-            <div key={textbook.id}>
-              <div className="flex items-center gap-2 mb-3">
+            <section key={textbook.id} id={`textbook-${textbook.id}`} className="adventure-book">
+              <div className="flex flex-wrap items-center gap-3 mb-5">
                 <span className="text-xl">{textbook.subject === 'english' ? '🔤' : '📖'}</span>
-                <h2 className="text-xl font-bold">{textbook.title}</h2>
-                <span className="text-sm text-[var(--color-text-secondary)]">{textbook.subtitle}</span>
+                <h2 className="text-xl font-bold">{textbook.subject === 'english' ? '英语' : '语文'} · {textbook.title}</h2>
+                <span className="textbook-edition !mt-0" data-subject={textbook.subject}>{textbook.subtitle}</span>
+                <span className="adventure-completion">已完成 {textbook.chapters.flatMap(ch => ch.levels.filter(l => isLevelCompleted(ch.id, l.id))).length} / {textbook.chapters.reduce((sum, ch) => sum + ch.levels.length, 0)} 关</span>
               </div>
-
+              <div className="adventure-chapters">
               {textbook.chapters.map(chapter => (
-                <div key={chapter.id} className="bg-[var(--color-bg-secondary)] rounded-xl p-5 mb-4">
-                  <div className="flex items-center gap-3 mb-3">
+                <div key={chapter.id} className="adventure-chapter bg-[var(--color-bg-secondary)] rounded-xl">
+                  <div className="flex items-center gap-4 mb-6">
                     <span className="text-2xl">{chapter.icon}</span>
                     <div>
-                      <h3 className="font-bold">{chapter.title}</h3>
-                      <p className="text-xs text-[var(--color-text-secondary)]">{chapter.subtitle}</p>
+                      <h3 className="text-xl font-bold">{chapter.title}</h3>
+                      <p className="text-sm mt-1 text-[var(--color-text-secondary)]">{chapter.subtitle}</p>
                     </div>
                   </div>
 
-                  <div className="flex flex-wrap gap-3">
+                  <div className="adventure-levels">
                     {chapter.levels.map((level, li) => {
                       const stars = getLevelStars(chapter.id, level.id)
                       const completed = isLevelCompleted(chapter.id, level.id)
@@ -85,9 +103,10 @@ export default function Adventure() {
                       return (
                         <button
                           key={level.id}
+                          aria-label={`${chapter.title} · ${level.title}${!unlocked ? '，未解锁' : completed ? '，已完成' : ''}`}
                           onClick={() => unlocked && navigate(`/adventure/${chapter.id}/${level.id}`)}
                           disabled={!unlocked}
-                          className={`relative w-24 h-24 rounded-xl flex flex-col items-center justify-center gap-1 transition-all cursor-pointer ${
+                          className={`adventure-level relative rounded-xl flex flex-col items-center justify-center gap-2 transition-all cursor-pointer ${
                             !unlocked
                               ? 'bg-slate-700 text-slate-500 cursor-not-allowed'
                               : completed
@@ -95,22 +114,19 @@ export default function Adventure() {
                                 : 'bg-slate-800 hover:bg-slate-700 border-2 border-[var(--color-accent-blue)] animate-pulse'
                           }`}
                         >
-                          {!unlocked ? (
-                            <span className="text-2xl">🔒</span>
-                          ) : (
                             <>
-                              <span className="text-xs text-[var(--color-text-secondary)]">{level.type === 'boss' ? '👑' : `L${li + 1}`}</span>
-                              <span className="text-sm font-semibold truncate max-w-[80px]">{level.title}</span>
+                              <span className="text-sm text-[var(--color-text-secondary)]">{!unlocked ? '🔒' : level.type === 'boss' ? '👑' : `L${li + 1}`}</span>
+                              <span className="text-sm font-semibold">{level.title}</span>
                               {stars > 0 && <StarRating stars={stars} size="sm" />}
                             </>
-                          )}
                         </button>
                       )
                     })}
                   </div>
                 </div>
               ))}
-            </div>
+              </div>
+            </section>
           ))}
         </div>
       )}

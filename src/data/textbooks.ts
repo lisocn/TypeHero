@@ -23,7 +23,7 @@ function lvl(
 const TEXTBOOKS: Textbook[] = [
   // ==================== ENGLISH GRADE 3 ====================
   {
-    id: 'eng-3a', title: '三年级上册', subtitle: 'PEP 三年级上', subject: 'english', grade: 3, semester: 'a',
+    id: 'eng-3a', title: '三年级上册', subtitle: '人民教育出版社版', subject: 'english', grade: 3, semester: 'a',
     chapters: [
       {
         id: 'eng-3a-ch1', title: 'School Supplies', subtitle: 'Unit 1 学校用品', order: 1, icon: '🏫',
@@ -81,7 +81,7 @@ const TEXTBOOKS: Textbook[] = [
     ],
   },
   {
-    id: 'eng-3b', title: '三年级下册', subtitle: 'PEP 三年级下', subject: 'english', grade: 3, semester: 'b',
+    id: 'eng-3b', title: '三年级下册', subtitle: '人民教育出版社版', subject: 'english', grade: 3, semester: 'b',
     chapters: [
       {
         id: 'eng-3b-ch1', title: 'Welcome Back', subtitle: 'Unit 1 欢迎回来', order: 1, icon: '👋',
@@ -136,7 +136,7 @@ const TEXTBOOKS: Textbook[] = [
 
   // ==================== ENGLISH GRADE 4 ====================
   {
-    id: 'eng-4a', title: '四年级上册', subtitle: 'PEP 四年级上', subject: 'english', grade: 4, semester: 'a',
+    id: 'eng-4a', title: '四年级上册', subtitle: '人民教育出版社版', subject: 'english', grade: 4, semester: 'a',
     chapters: [
       {
         id: 'eng-4a-ch1', title: 'My Classroom', subtitle: 'Unit 1 我的教室', order: 1, icon: '🏢',
@@ -307,7 +307,7 @@ const TEXTBOOKS: Textbook[] = [
     ],
   },
   {
-    id: 'eng-4b', title: '四年级下册', subtitle: 'PEP 四年级下', subject: 'english', grade: 4, semester: 'b',
+    id: 'eng-4b', title: '四年级下册', subtitle: '人民教育出版社版', subject: 'english', grade: 4, semester: 'b',
     chapters: [
       {
         id: 'eng-4b-ch1', title: 'My School', subtitle: 'Unit 1 我的学校', order: 1, icon: '🏫',
@@ -479,7 +479,7 @@ const TEXTBOOKS: Textbook[] = [
     ],
   },
   {
-    id: 'eng-5a', title: '五年级上册', subtitle: 'PEP 五年级上', subject: 'english', grade: 5, semester: 'a',
+    id: 'eng-5a', title: '五年级上册', subtitle: '人民教育出版社版', subject: 'english', grade: 5, semester: 'a',
     chapters: [
       {
         id: 'eng-5a-ch1', title: "What's He Like?", subtitle: 'Unit 1 他是什么样的人', order: 1, icon: '👤',
@@ -654,7 +654,7 @@ const TEXTBOOKS: Textbook[] = [
     ],
   },
   {
-    id: 'eng-5b', title: '五年级下册', subtitle: 'PEP 五年级下', subject: 'english', grade: 5, semester: 'b',
+    id: 'eng-5b', title: '五年级下册', subtitle: '人民教育出版社版', subject: 'english', grade: 5, semester: 'b',
     chapters: [
       {
         id: 'eng-5b-ch1', title: 'My Day', subtitle: 'Unit 1 我的一天', order: 1, icon: '⏰',
@@ -829,7 +829,7 @@ const TEXTBOOKS: Textbook[] = [
     ],
   },
   {
-    id: 'eng-6a', title: '六年级上册', subtitle: 'PEP 六年级上', subject: 'english', grade: 6, semester: 'a',
+    id: 'eng-6a', title: '六年级上册', subtitle: '人民教育出版社版', subject: 'english', grade: 6, semester: 'a',
     chapters: [
       {
         id: 'eng-6a-ch1', title: 'How Can I Get There?', subtitle: 'Unit 1 怎么去那里', order: 1, icon: '🗺️',
@@ -1008,7 +1008,7 @@ const TEXTBOOKS: Textbook[] = [
     ],
   },
   {
-    id: 'eng-6b', title: '六年级下册', subtitle: 'PEP 六年级下', subject: 'english', grade: 6, semester: 'b',
+    id: 'eng-6b', title: '六年级下册', subtitle: '人民教育出版社版', subject: 'english', grade: 6, semester: 'b',
     chapters: [
       {
         id: 'eng-6b-ch1', title: 'How Tall Are You?', subtitle: 'Unit 1 你多高', order: 1, icon: '📏',
@@ -1132,7 +1132,7 @@ const TEXTBOOKS: Textbook[] = [
 
   // ==================== CHINESE GRADE 3 ====================
   {
-    id: 'chn-3a', title: '三年级上册', subtitle: '部编版 三年级上', subject: 'chinese', grade: 3, semester: 'a',
+    id: 'chn-3a', title: '三年级上册', subtitle: '国家统一编写版', subject: 'chinese', grade: 3, semester: 'a',
     chapters: [
       {
         id: 'chn-3a-ch1', title: '望天门山', subtitle: '古诗词·李白', order: 1, icon: '🏔️',
@@ -1181,7 +1181,7 @@ const TEXTBOOKS: Textbook[] = [
     ],
   },
   {
-    id: 'chn-3b', title: '三年级下册', subtitle: '部编版 三年级下', subject: 'chinese', grade: 3, semester: 'b',
+    id: 'chn-3b', title: '三年级下册', subtitle: '国家统一编写版', subject: 'chinese', grade: 3, semester: 'b',
     chapters: [
       {
         id: 'chn-3b-ch1', title: '绝句', subtitle: '古诗词·杜甫', order: 1, icon: '🌸',
@@ -1235,7 +1235,7 @@ const TEXTBOOKS: Textbook[] = [
 
   // ==================== CHINESE GRADE 4 ====================
   {
-    id: 'chn-4a', title: '四年级上册', subtitle: '部编版 四年级上', subject: 'chinese', grade: 4, semester: 'a',
+    id: 'chn-4a', title: '四年级上册', subtitle: '国家统一编写版', subject: 'chinese', grade: 4, semester: 'a',
     chapters: [
       {
         id: 'chn-4a-ch1', title: '题西林壁', subtitle: '古诗词·苏轼', order: 1, icon: '🏯',
@@ -1328,7 +1328,7 @@ const TEXTBOOKS: Textbook[] = [
     ],
   },
   {
-    id: 'chn-4b', title: '四年级下册', subtitle: '部编版 四年级下', subject: 'chinese', grade: 4, semester: 'b',
+    id: 'chn-4b', title: '四年级下册', subtitle: '国家统一编写版', subject: 'chinese', grade: 4, semester: 'b',
     chapters: [
       {
         id: 'chn-4b-ch1', title: '四时田园杂兴', subtitle: '古诗词·范成大', order: 1, icon: '🌾',
@@ -1428,7 +1428,7 @@ const TEXTBOOKS: Textbook[] = [
 
   // ==================== CHINESE GRADE 5 ====================
   {
-    id: 'chn-5a', title: '五年级上册', subtitle: '部编版 五年级上', subject: 'chinese', grade: 5, semester: 'a',
+    id: 'chn-5a', title: '五年级上册', subtitle: '国家统一编写版', subject: 'chinese', grade: 5, semester: 'a',
     chapters: [
       {
         id: 'chn-5a-ch1', title: '示儿', subtitle: '古诗词·陆游', order: 1, icon: '📜',
@@ -1521,7 +1521,7 @@ const TEXTBOOKS: Textbook[] = [
     ],
   },
   {
-    id: 'chn-5b', title: '五年级下册', subtitle: '部编版 五年级下', subject: 'chinese', grade: 5, semester: 'b',
+    id: 'chn-5b', title: '五年级下册', subtitle: '国家统一编写版', subject: 'chinese', grade: 5, semester: 'b',
     chapters: [
       {
         id: 'chn-5b-ch1', title: '四时田园杂兴', subtitle: '古诗词·范成大', order: 1, icon: '🌻',
@@ -1618,7 +1618,7 @@ const TEXTBOOKS: Textbook[] = [
 
   // ==================== CHINESE GRADE 6 ====================
   {
-    id: 'chn-6a', title: '六年级上册', subtitle: '部编版 六年级上', subject: 'chinese', grade: 6, semester: 'a',
+    id: 'chn-6a', title: '六年级上册', subtitle: '国家统一编写版', subject: 'chinese', grade: 6, semester: 'a',
     chapters: [
       {
         id: 'chn-6a-ch1', title: '七律·长征', subtitle: '古诗词·毛泽东', order: 1, icon: '⛰️',
@@ -1716,7 +1716,7 @@ const TEXTBOOKS: Textbook[] = [
     ],
   },
   {
-    id: 'chn-6b', title: '六年级下册', subtitle: '部编版 六年级下', subject: 'chinese', grade: 6, semester: 'b',
+    id: 'chn-6b', title: '六年级下册', subtitle: '国家统一编写版', subject: 'chinese', grade: 6, semester: 'b',
     chapters: [
       {
         id: 'chn-6b-ch1', title: '石灰吟', subtitle: '古诗词·于谦', order: 1, icon: '💎',

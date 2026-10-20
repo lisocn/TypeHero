@@ -1,5 +1,7 @@
 import { useState, useCallback, useRef, useEffect } from 'react'
 import { calcWPM, calcAccuracy } from '../utils/stats'
+import { buildTypingContent } from '../utils/typingContent'
+import type { LevelContent } from '../data/types'
 
 export interface TypedChar {
   expected: string
@@ -11,6 +13,7 @@ export interface TypedChar {
 export interface TypingEngineConfig {
   mode: 'char' | 'word' | 'sentence' | 'paragraph'
   content: string[]
+  language?: LevelContent['language']
   timeLimit: number
   difficulty: 'easy' | 'medium' | 'hard'
   onComplete: (result: TypingResult) => void
@@ -31,6 +34,7 @@ export interface TypingResult {
 }
 
 interface TypingEngineState {
+  fullContent: string
   status: 'idle' | 'playing' | 'paused' | 'finished'
   currentIndex: number
   currentChar: string
@@ -65,7 +69,7 @@ export function useTypingEngine(config: TypingEngineConfig): TypingEngineState {
   const maxComboRef = useRef(0)
   const timerRef = useRef<number | null>(null)
 
-  const fullContent = config.content.join('')
+  const fullContent = buildTypingContent(config.content, config.mode, config.language)
   const progress = fullContent.length > 0 ? Math.min(100, (currentIndex / fullContent.length) * 100) : 0
 
   const calculateResult = useCallback((): TypingResult => {
@@ -196,6 +200,8 @@ export function useTypingEngine(config: TypingEngineConfig): TypingEngineState {
     if (status !== 'playing') return
 
     const handler = (e: KeyboardEvent) => {
+      if (e.defaultPrevented || e.isComposing || e.keyCode === 229 || e.ctrlKey || e.altKey || e.metaKey) return
+      if (e.target instanceof Element && e.target.closest('input, textarea, select, [contenteditable]:not([contenteditable="false"]), [role="dialog"]')) return
       if (e.key === 'Backspace') {
         e.preventDefault()
         return
@@ -209,6 +215,8 @@ export function useTypingEngine(config: TypingEngineConfig): TypingEngineState {
         return
       }
       if (e.key.length === 1) {
+        // A space is a scored keystroke, not a page-scroll or button activation.
+        if (e.key === ' ') e.preventDefault()
         handleKeyDown(e.key)
       }
     }
@@ -234,6 +242,7 @@ export function useTypingEngine(config: TypingEngineConfig): TypingEngineState {
   const currentChar = fullContent[currentIndex] || ''
 
   return {
+    fullContent,
     status,
     currentIndex,
     currentChar,
