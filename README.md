@@ -10,6 +10,8 @@
 
 教材、词义、语音和音效均随程序打包，日常练习不需要联网。第一次使用创建一个英雄，选择教材即可开始。
 
+语文的汉字练习请切换中文输入法，在“中文输入区”输入；选字确认后逐字计分，支持一次输入词语或整句。句子分行显示，句间不需要额外输入空格。拼音练习则使用英文输入，按提示保留拼音之间的空格。
+
 ### 键盘操作
 
 | 按键 | 功能 |
@@ -78,6 +80,9 @@ node --test tests/*.test.mjs
 
 # 构建桌面版并验证主要操作流程
 npm run desktop:test
+
+# 验证中文输入法、句子间隔和拼音练习
+node tests/desktop/chinese-input.cjs
 ```
 
 桌面测试使用 `.desktop-test/` 中的隔离存档，不读取真实用户存档。设置 `TYPEHERO_TEST_EXECUTABLE` 可测试 `release/win-unpacked/TypeHero.exe`。

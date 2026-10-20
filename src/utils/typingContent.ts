@@ -14,3 +14,14 @@ export function buildTypingContent(
   const needsSpaces = language ? language !== 'zh-hanzi' : !items.some(item => /\p{Script=Han}/u.test(item))
   return items.join(needsSpaces ? ' ' : '')
 }
+
+/** Separate Chinese display groups without introducing artificial scored spaces. */
+export function getChineseTypingSegments(content: readonly string[], mode: LevelContent['mode']) {
+  let start = 0
+  return content.map(item => {
+    const text = buildTypingContent([item], mode, 'zh-hanzi')
+    const segment = { text, start }
+    start += text.length
+    return segment
+  }).filter(segment => segment.text.length > 0)
+}

@@ -65,6 +65,15 @@
 .word-learning-meaning { color: #a7f3d0; }
 .word-learning-syllables { color: #fde68a; letter-spacing: 1px; }
 .game-text-panel:has(.word-learning-hint) .game-text { height: 152px; }
+.game-text-panel:has(.chinese-typing-input) .game-text { height: clamp(220px, 40vh, 440px); }
+.game-text-chinese { font-family: var(--font-body, sans-serif); }
+.game-chinese-sentence, .game-chinese-paragraph { display: block; margin-bottom: .35em; }
+.game-chinese-word { display: inline-block; margin-inline-end: 1em; }
+.chinese-typing-input { border-top: 1px solid #33415580; padding: 16px 24px; }
+.chinese-typing-input label { display: block; margin-bottom: 8px; color: #cbd5e1; font-size: 14px; }
+.chinese-typing-input input { width: 100%; min-width: 0; padding: 10px 14px; border: 1px solid #64748b; border-radius: 8px; background: #0f172a; color: #f8fafc; font-size: 20px; }
+.chinese-typing-input input:focus { outline: 2px solid #60a5fa; outline-offset: 2px; }
+.chinese-typing-input p { margin-top: 8px; color: #94a3b8; font-size: 13px; line-height: 1.6; }
 .textbook-edition { display: inline-flex; align-items: center; padding: 7px 12px; margin-top: 14px; border: 1px solid #60a5fa66; border-radius: 8px; background: #3b82f61a; color: #bfdbfe; font-size: 14px; font-weight: 600; line-height: 1.6; }
 .textbook-edition[data-subject="chinese"] { border-color: #fbbf2466; background: #fbbf2412; color: #fde68a; }
 .game-mobile-controls { display: none; }

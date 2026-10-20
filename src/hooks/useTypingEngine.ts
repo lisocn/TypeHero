@@ -14,6 +14,7 @@ export interface TypingEngineConfig {
   mode: 'char' | 'word' | 'sentence' | 'paragraph'
   content: string[]
   language?: LevelContent['language']
+  useTextInput?: boolean
   timeLimit: number
   difficulty: 'easy' | 'medium' | 'hard'
   onComplete: (result: TypingResult) => void
@@ -50,6 +51,7 @@ interface TypingEngineState {
   resume: () => void
   reset: () => void
   handleKeyDown: (key: string) => void
+  handleTextInput: (text: string) => void
 }
 
 export function useTypingEngine(config: TypingEngineConfig): TypingEngineState {
@@ -68,6 +70,8 @@ export function useTypingEngine(config: TypingEngineConfig): TypingEngineState {
   const comboRef = useRef(0)
   const maxComboRef = useRef(0)
   const timerRef = useRef<number | null>(null)
+  const currentIndexRef = useRef(0)
+  const statusRef = useRef<TypingEngineState['status']>('idle')
 
   const fullContent = buildTypingContent(config.content, config.mode, config.language)
   const progress = fullContent.length > 0 ? Math.min(100, (currentIndex / fullContent.length) * 100) : 0
@@ -95,12 +99,18 @@ export function useTypingEngine(config: TypingEngineConfig): TypingEngineState {
   }, [])
 
   const finishGame = useCallback(() => {
+    if (statusRef.current !== 'playing') return
+    statusRef.current = 'finished'
     setStatus('finished')
     if (timerRef.current) clearInterval(timerRef.current)
     config.onComplete(calculateResult())
   }, [config, calculateResult])
 
   const start = useCallback(() => {
+    statusRef.current = 'playing'
+    currentIndexRef.current = 0
+    setCurrentIndex(0)
+    setTypedChars([])
     setStatus('playing')
     startTimeRef.current = Date.now()
     totalInputsRef.current = 0
@@ -126,11 +136,15 @@ export function useTypingEngine(config: TypingEngineConfig): TypingEngineState {
   }, [config, finishGame])
 
   const pause = useCallback(() => {
+    if (statusRef.current !== 'playing') return
+    statusRef.current = 'paused'
     setStatus('paused')
     if (timerRef.current) clearInterval(timerRef.current)
   }, [])
 
   const resume = useCallback(() => {
+    if (statusRef.current !== 'paused') return
+    statusRef.current = 'playing'
     setStatus('playing')
     if (config.timeLimit > 0) {
       timerRef.current = window.setInterval(() => {
@@ -149,6 +163,8 @@ export function useTypingEngine(config: TypingEngineConfig): TypingEngineState {
   }, [config, finishGame])
 
   const reset = useCallback(() => {
+    statusRef.current = 'idle'
+    currentIndexRef.current = 0
     setStatus('idle')
     setCurrentIndex(0)
     setTypedChars([])
@@ -161,10 +177,9 @@ export function useTypingEngine(config: TypingEngineConfig): TypingEngineState {
   }, [config.timeLimit])
 
   const handleKeyDown = useCallback((key: string) => {
-    if (status !== 'playing') return
-    if (['Shift', 'Control', 'Alt', 'Meta', 'CapsLock'].includes(key)) return
+    if (statusRef.current !== 'playing' || key.length !== 1) return
 
-    const expected = fullContent[currentIndex]
+    const expected = fullContent[currentIndexRef.current]
     if (!expected) return
 
     totalInputsRef.current++
@@ -184,7 +199,8 @@ export function useTypingEngine(config: TypingEngineConfig): TypingEngineState {
 
     setTypedChars(prev => [...prev, { expected, typed: key, correct: key === expected, timestamp: Date.now() }])
 
-    const newIndex = currentIndex + 1
+    const newIndex = currentIndexRef.current + 1
+    currentIndexRef.current = newIndex
     setCurrentIndex(newIndex)
 
     const duration = (Date.now() - startTimeRef.current) / 1000
@@ -194,7 +210,13 @@ export function useTypingEngine(config: TypingEngineConfig): TypingEngineState {
     if (newIndex >= fullContent.length) {
       finishGame()
     }
-  }, [status, currentIndex, fullContent, finishGame])
+  }, [fullContent, finishGame])
+
+  // IMEs can commit a whole word/sentence in one event. Advance synchronously
+  // rather than reading a React state snapshot for every character in the batch.
+  const handleTextInput = useCallback((text: string) => {
+    for (const char of text.split('')) handleKeyDown(char)
+  }, [handleKeyDown])
 
   useEffect(() => {
     if (status !== 'playing') return
@@ -214,7 +236,7 @@ export function useTypingEngine(config: TypingEngineConfig): TypingEngineState {
         e.preventDefault()
         return
       }
-      if (e.key.length === 1) {
+      if (e.key.length === 1 && !config.useTextInput) {
         // A space is a scored keystroke, not a page-scroll or button activation.
         if (e.key === ' ') e.preventDefault()
         handleKeyDown(e.key)
@@ -223,7 +245,7 @@ export function useTypingEngine(config: TypingEngineConfig): TypingEngineState {
 
     window.addEventListener('keydown', handler)
     return () => window.removeEventListener('keydown', handler)
-  }, [status, handleKeyDown, pause])
+  }, [status, handleKeyDown, pause, config.useTextInput])
 
   useEffect(() => {
     const handleBlur = () => {
@@ -258,5 +280,6 @@ export function useTypingEngine(config: TypingEngineConfig): TypingEngineState {
     resume,
     reset,
     handleKeyDown,
+    handleTextInput,
   }
 }

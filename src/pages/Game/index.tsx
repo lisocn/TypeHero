@@ -14,6 +14,8 @@ import KeyboardHint from '../../components/KeyboardHint'
 import { useCountdownVoice } from '../../hooks/useCountdownVoice'
 import CountdownNumber from '../../components/CountdownNumber'
 import WordLearningHint from '../../components/WordLearningHint'
+import ChineseTypingInput from '../../components/ChineseTypingInput'
+import { getChineseTypingSegments } from '../../utils/typingContent'
 
 type GamePhase = 'ready' | 'countdown' | 'playing' | 'paused' | 'result'
 
@@ -41,11 +43,14 @@ export default function Game() {
   const prevComboRef = useRef(0)
   const prevIndexRef = useRef(0)
   const textViewportRef = useRef<HTMLDivElement>(null)
+  const isHanzi = level?.content.language === 'zh-hanzi'
+    || (!level?.content.language && content.some(text => /\p{Script=Han}/u.test(text)))
 
   const engine = useTypingEngine({
     mode: (level?.content.mode as 'char' | 'word' | 'sentence' | 'paragraph') || 'char',
     content,
     language: level?.content.language,
+    useTextInput: isHanzi,
     timeLimit: level?.timeLimit ?? 0,
     difficulty: 'medium',
     onComplete: (result) => {
@@ -181,6 +186,7 @@ export default function Game() {
 
   if (!chapter || !level) return <div className="text-center py-20 text-white">关卡不存在<br /><Button onClick={() => navigate('/adventure')}>返回地图</Button></div>
   const fullContent = engine.fullContent
+  const segments = isHanzi ? getChineseTypingSegments(content, level.content.mode) : [{ text: fullContent, start: 0 }]
 
   return (
     <div className="desktop-page game-page">
@@ -213,11 +219,13 @@ export default function Game() {
       {visiblePhase === 'playing' && (
         <div className="game-workspace">
           <div className="game-practice">
-          <div className="game-text-panel">
-            <div className="game-panel-heading"><span>⌨ 跟随光标输入 · ␣ 表示空格键</span><span>{engine.currentIndex} / {fullContent.length} 字符</span></div>
+          <div className="game-text-panel" onClick={event => { if (isHanzi) event.currentTarget.querySelector('input')?.focus() }}>
+            <div className="game-panel-heading"><span>{isHanzi ? '⌨ 使用中文输入法 · 选字确认后计分' : level.content.language === 'zh-pinyin' ? '⌨ 切换英文输入 · 按提示输入拼音和空格' : '⌨ 跟随光标输入 · ␣ 表示空格键'}</span><span>{engine.currentIndex} / {fullContent.length} 字符</span></div>
             {textbook?.subject === 'english' && level.content.mode !== 'char' && <WordLearningHint text={fullContent} currentIndex={engine.currentIndex} items={level.content.mode === 'word' ? content : undefined} />}
-            <div ref={textViewportRef} className="game-text mono">
-              {fullContent.split('').map((char, i) => {
+            <div ref={textViewportRef} className={`game-text ${isHanzi ? 'game-text-chinese' : 'mono'}`}>
+              {segments.map((segment, segmentIndex) => <span key={segmentIndex} className={isHanzi ? `game-chinese-segment game-chinese-${level.content.mode}` : undefined}>
+              {segment.text.split('').map((char, offset) => {
+                const i = segment.start + offset
                 let color = 'text-gray-500'
                 if (i < engine.currentIndex) {
                   const typed = engine.typedChars[i]
@@ -231,21 +239,23 @@ export default function Game() {
                   </span>
                 )
               })}
+              </span>)}
             </div>
+            {isHanzi && <ChineseTypingInput onTextInput={engine.handleTextInput} />}
           </div>
 
-          <div className="game-keyboard-panel"><VirtualKeyboard targetKey={engine.currentChar} />
-          <p className="game-keyboard-note">让手指回到基准键位，保持轻松的练习节奏</p></div>
+          {!isHanzi && <div className="game-keyboard-panel"><VirtualKeyboard targetKey={engine.currentChar} />
+          <p className="game-keyboard-note">让手指回到基准键位，保持轻松的练习节奏</p></div>}
           <div className="game-mobile-controls"><Button variant="secondary" onClick={pauseRound}>⏸️ 暂停练习</Button><KeyboardHint>暂停 / 继续</KeyboardHint></div>
           </div>
           <aside className="game-guide">
             <p className="page-eyebrow">下一个字符</p>
             <div className="game-next-char">{engine.currentChar === ' ' ? '␣' : engine.currentChar}</div>
             <h2>练习小提示</h2>
-            <p>金色按键指引下一个位置。先看清字符，再轻轻敲下按键。</p>
+            <p>{isHanzi ? '在中文输入区使用输入法选字，确认后会逐字检查。句子分行显示，换行处不需要额外输入空格。' : '金色按键指引下一个位置。先看清字符，再轻轻敲下按键。'}</p>
             <div className="game-targets"><span>本关目标</span><p>准确率 ≥ {level.targetAccuracy.bronze}%</p><p>速度 ≥ {level.targetWPM.bronze} WPM</p></div>
             <p><kbd>Esc</kbd> 暂停练习</p>
-            <KeyboardHint>暂停 / 继续</KeyboardHint>
+            <KeyboardHint>{isHanzi ? '输入框外可暂停 / 继续；输入框内回车用于选字' : '暂停 / 继续'}</KeyboardHint>
             <Button variant="ghost" onClick={pauseRound}>
               ⏸️ 暂停
             </Button>
