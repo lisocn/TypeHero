@@ -12,6 +12,50 @@ const env = { ...process.env, TYPEHERO_USER_DATA: profile, TYPEHERO_SMOKE_TEST: 
 delete env.ELECTRON_RUN_AS_NODE
 let desktopApp
 
+async function checkFullscreen(page, playing = false) {
+  const input = (type, keyCode) => desktopApp.evaluate(({ BrowserWindow }, input) => BrowserWindow.getAllWindows()[0].webContents.sendInputEvent(input), { type, keyCode })
+  const press = async key => { await input('keyDown', key); await input('keyUp', key) }
+  const fullscreen = () => desktopApp.evaluate(({ BrowserWindow }) => BrowserWindow.getAllWindows()[0].isFullScreen())
+  const waitForFullscreen = async expected => {
+    for (let attempt = 0; attempt < 100; attempt++) {
+      if (await fullscreen() === expected) return
+      await new Promise(resolve => setTimeout(resolve, 50))
+    }
+    assert.fail(`Fullscreen did not become ${expected}`)
+  }
+  await page.evaluate(() => {
+    if (window.__escapeListener) window.removeEventListener('keydown', window.__escapeListener)
+    window.__escapeEvents = 0
+    window.__escapeListener = event => { if (event.key === 'Escape') window.__escapeEvents++ }
+    window.addEventListener('keydown', window.__escapeListener)
+  })
+  await press('F11')
+  await waitForFullscreen(true)
+  await press('F11')
+  await waitForFullscreen(false)
+  // Enter via the native menu too, then leave while a renderer control has focus.
+  await desktopApp.evaluate(({ Menu, BrowserWindow }) => {
+    const item = Menu.getApplicationMenu().items.find(item => item.label === '显示').submenu.items.find(item => item.role === 'togglefullscreen')
+    item.click(undefined, BrowserWindow.getAllWindows()[0])
+  })
+  await waitForFullscreen(true)
+  await page.locator('button').first().focus()
+  await input('keyDown', 'Escape')
+  await waitForFullscreen(false)
+  await input('keyDown', 'Escape') // Held key must not leak a repeat into the game.
+  await input('keyUp', 'Escape')
+  assert.equal(await page.evaluate(() => window.__escapeEvents), 0)
+  if (playing) assert.equal(await page.locator('.game-text').isVisible(), true)
+  await press('Escape')
+  assert.equal(await page.evaluate(() => window.__escapeEvents), 1)
+  if (playing) {
+    await page.getByRole('button', { name: '▶️ 继续', exact: true }).waitFor()
+    await page.getByRole('button', { name: '▶️ 继续', exact: true }).press('Enter')
+    await page.locator('.game-text').waitFor()
+  }
+  console.log('PASS: F11 toggles fullscreen; Escape exits menu fullscreen without reaching game controls; windowed Escape still works')
+}
+
 async function launch() {
   desktopApp = await _electron.launch({ executablePath, args: process.env.TYPEHERO_TEST_EXECUTABLE ? [] : [root], env })
   const page = await desktopApp.firstWindow()
@@ -24,6 +68,8 @@ async function launch() {
 
 async function main() {
   let page = await launch()
+  await page.getByRole('button', { name: /开始冒险/ }).waitFor()
+  await checkFullscreen(page)
   const foreignRequests = []
   page.on('request', request => { if (!request.url().startsWith('typehero://app/')) foreignRequests.push(request.url()) })
   await page.keyboard.press('Enter')
@@ -38,6 +84,7 @@ async function main() {
   await page.waitForURL('**/eng-3a-ch1-l1')
   await page.keyboard.press('Enter')
   await page.locator('.game-text').waitFor()
+  await checkFullscreen(page, true)
   await page.keyboard.type('rulepbag', { delay: 20 })
   await page.getByText('🎉 关卡完成！').waitFor()
   await page.waitForFunction(async () => {

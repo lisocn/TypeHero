@@ -54,6 +54,27 @@ function createWindow() {
     if (process.env.TYPEHERO_SMOKE_TEST !== '1') { mainWindow.maximize(); mainWindow.show() }
   })
   mainWindow.webContents.setWindowOpenHandler(() => ({ action: 'deny' }))
+  // Handle window shortcuts before the renderer so Escape cannot also pause,
+  // navigate or close a dialog while leaving native fullscreen.
+  let escapeExitsFullscreen = false
+  mainWindow.webContents.on('before-input-event', (event, input) => {
+    const plainKey = !input.control && !input.alt && !input.meta && !input.shift
+    if (input.key === 'F11' && plainKey) {
+      event.preventDefault()
+      if (input.type === 'keyDown' && !input.isAutoRepeat) mainWindow.setFullScreen(!mainWindow.isFullScreen())
+      return
+    }
+    if (input.key !== 'Escape') return
+    if (input.type === 'keyDown' && plainKey && mainWindow.isFullScreen()) {
+      escapeExitsFullscreen = true
+      mainWindow.setFullScreen(false)
+    }
+    if (escapeExitsFullscreen) {
+      event.preventDefault()
+      if (input.type === 'keyUp') escapeExitsFullscreen = false
+    }
+  })
+  mainWindow.on('blur', () => { escapeExitsFullscreen = false })
   mainWindow.webContents.on('will-navigate', (event, url) => {
     if (!url.startsWith('typehero://app/')) event.preventDefault()
   })
@@ -80,7 +101,7 @@ else {
       { label: '显示', submenu: [
         { role: 'resetZoom', label: '恢复默认大小' },
         { role: 'zoomIn', label: '放大' }, { role: 'zoomOut', label: '缩小' },
-        { role: 'togglefullscreen', label: '全屏' },
+        { role: 'togglefullscreen', label: '全屏 / 退出全屏', accelerator: 'F11' },
       ] },
     ]))
     createWindow()
